@@ -11,6 +11,7 @@ import Profile from "./Profile";
 import * as React from "react";
 import {Navigate, useMatch} from 'react-router-dom'
 import {withRedirect} from "../../hoc/withRedirect";
+import { compose } from 'redux';
 
 class Profile_Api_Container extends React.Component {
 
@@ -39,16 +40,18 @@ let ProfileMatch = (props) => {
     return <Profile_Api_Container {...props} match={match}/>
 }
 
-const Profile_Container = connect(mapStateToProps, {
-    addPostActionCreator,
-    addNewPostText,
-    addLike,
-    removeLike,
-    setUserProfile,
-    myProfile,
-    setStatus
-
-})(ProfileMatch)
+const Profile_Container = compose(
+    withRedirect,
+    connect(mapStateToProps, {
+        addPostActionCreator,
+        addNewPostText,
+        addLike,
+        removeLike,
+        setUserProfile,
+        myProfile,
+        setStatus
+    })
+)(ProfileMatch)
 
 
 export default Profile_Container
