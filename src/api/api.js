@@ -1,5 +1,4 @@
 import * as axios from "axios";
-import {resolvePath} from "react-router-dom";
 
 const instance = axios.create({
     withCredentials : true,

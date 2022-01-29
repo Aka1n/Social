@@ -14,6 +14,7 @@ import classes from './Profile.module.css';
 import img from '../../img/IMG_7219.JPG';
 import Profile__data from './Profile__Data/Profile__data';
 import Profile__MyPosts from './Profile__MyPosts/Profile__MyPosts';
+import {withRedirect} from "../../hoc/withRedirect";
 
 const ProfilePage = () => {
   const userId = useMatch('profile/:userId/');
@@ -45,4 +46,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default withRedirect(ProfilePage);
