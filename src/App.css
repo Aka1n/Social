@@ -1,0 +1,41 @@
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    border: 0;
+    outline: 0;
+}
+a {
+    text-decoration: none;
+}
+textarea {
+    resize: none;
+    height: 0px;
+}
+html {
+ height: 100%;
+}
+body {
+    height: 100%;
+    font-family: Candara;
+}
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 1000px;
+    height: 100%;
+
+}
+.main {
+    display: flex;
+    flex: 1 1 auto;
+}
+#root {
+    height: 100%;
+}
+
+

@@ -1,0 +1,18 @@
+.login {
+
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+}
+.login label {
+    display: flex;
+    flex-direction: column;
+}
+.login input {
+    display: flex;
+    background-color: rgba(220,220,220,0.5);
+    border: solid 1px slategray;
+    padding: 10px;
+}

@@ -1,0 +1,39 @@
+.profile {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.body {
+    display: flex;
+}
+.avatar {
+    object-position: 0px 0px;
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    margin-right: 10px;
+}
+.data {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    color: darkslategray;
+}
+
+.item:first-child {
+    font-size: 24px;
+}
+.social {
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 300ms;
+    font-size: 20px;
+    opacity: 0.5;
+}
+.social:hover {
+    opacity: 1;
+}
+.contacts a {
+    margin-right: 5px;
+    text-decoration: none;
+    color:#000000;
+}

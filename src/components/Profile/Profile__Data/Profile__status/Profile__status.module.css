@@ -1,0 +1,27 @@
+.status {
+    margin-bottom: 25px;
+    font-weight: normal;
+    cursor: pointer;
+}
+.input {
+    display: flex;
+    background-color: rgba(220,220,220,0.5);
+    border: solid 1px slategray;
+    padding: 10px;
+}
+.text {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.text:after {
+    transition: 300ms;
+    content: "\f304";
+    font-family: "Font Awesome 5 Free";
+    opacity: 0;
+    margin-left: 20px;
+    font-weight: bold;
+}
+.text:hover:after {
+    opacity: 0.5;
+}

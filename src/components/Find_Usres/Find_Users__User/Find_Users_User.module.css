@@ -1,0 +1,48 @@
+.user {
+    padding: 10px;
+    background-color: LightGray;
+}
+.body {
+    display: flex;
+}
+.addfriend {
+    margin-right: 10px;
+}
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+}
+.button {
+    background-color: darkblue;
+    height: 20px;
+    width: 60px;
+    color: white;
+    transition: 300ms;
+}
+.button:hover {
+    background-color: deepskyblue;
+    cursor: pointer;
+}
+.row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.info {
+    width: 100%;
+}
+.name {
+    font-size: 18px;
+}
+.from {
+    color: Gray;
+    font-size: 12px;
+}
+
+.status {
+    margin-top: 20px;
+    color: Gray;
+}

@@ -1,0 +1,32 @@
+.messages {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    max-width: 700.37px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.message {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    background-color: LightBlue;
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+.message:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: -5px;
+    border: 5px solid transparent;
+    border-left: 5px solid LightBlue;
+    border-top: 5px solid LightBlue;
+}

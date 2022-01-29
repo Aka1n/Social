@@ -1,0 +1,11 @@
+.body_loading {
+    display: flex;
+    flex: 1 0 auto;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+}
+.loading {
+    width: 100px;
+}

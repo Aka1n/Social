@@ -1,0 +1,23 @@
+.names {
+    position: relative;
+    min-width: 120px;
+}
+.body {
+    position: fixed;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-gap: 10px;
+}
+.name {
+    padding: 10px;
+    color: DarkSlateGrey;
+    background: LightGray;
+}
+.name:hover {
+    background-color: darkblue;
+    color: white;
+}
+.active {
+    background-color: darkblue;
+    color: white;
+}

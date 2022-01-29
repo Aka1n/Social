@@ -1,0 +1,55 @@
+.header {
+    position: fixed;
+    display: flex;
+    z-index: 9999;
+    max-width: 1000px;
+    width: 100%;
+    height: 60px;
+    background-color: darkblue ;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    max-height: 40px;
+}
+.logo.anim {
+    -webkit-animation: anim 10s linear infinite;
+    animation: anim 10s linear infinite;
+}
+@keyframes anim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.brand {
+    font-size: 24px;
+    color: aliceblue;
+}
+
+.back {
+    width: 100%;
+    min-height: 60px;
+    margin-bottom: 10px;
+}
+.body {
+    display: flex;
+    align-items: center;
+}
+.login {
+    padding-right: 10px;
+    color: white;
+}
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+
+}
+.body_login {
+    display: flex;
+    align-items: center;
+}

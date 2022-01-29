@@ -1,0 +1,51 @@
+.post {
+    margin-top: 10px;
+}
+.body {
+    display: flex;
+}
+.avatar {
+    flex: 0 0 auto;
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    background-color: darkblue;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.avatar img {
+    width: 100%;
+}
+
+.text {
+    padding: 0px 10px 10px 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-all;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+.like {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.icon {
+    transition: 300ms;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    color: rgba(0, 0, 139, 0.3);
+}
+.icon:hover {
+    color: darkblue;
+}
+.likes {
+    margin-left: 20px;
+}
+
+.active {
+    color: darkblue;
+}

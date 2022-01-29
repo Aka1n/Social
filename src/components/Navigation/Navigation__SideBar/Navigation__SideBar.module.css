@@ -1,0 +1,24 @@
+.body {}
+.profile {}
+.messages {}
+.news {}
+.music {}
+.settings {}
+.item:last-child {
+    margin-top: 39px;
+}
+.item a {
+    display: block;
+    transition: 300ms;
+    cursor: pointer;
+    padding: 10px;
+}
+.item a:visited {
+    color: white;
+}
+.active {
+    background-color: deepskyblue;
+}
+.item:hover {
+    background-color: deepskyblue;
+}
