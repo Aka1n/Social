@@ -1,57 +1,48 @@
-import {connect} from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
-    addLike,
-    addNewPostText,
-    addPostActionCreator,
-    myProfile,
-    removeLike, setStatus,
-    setUserProfile
-} from "../../redux/profile-reducer";
-import Profile from "./Profile";
-import * as React from "react";
-import {Navigate, useMatch} from 'react-router-dom'
-import {withRedirect} from "../../hoc/withRedirect";
-import { compose } from 'redux';
+  addLike,
+  addNewPostText,
+  addPostActionCreator,
+  myProfile,
+  removeLike,
+  setStatus
+} from '../../redux/profile-reducer';
+import * as React from 'react';
+import { useCallback, useEffect } from 'react';
+import { useMatch } from 'react-router-dom';
+import classes from './Profile.module.css';
+import img from '../../img/IMG_7219.JPG';
+import Profile__data from './Profile__Data/Profile__data';
+import Profile__MyPosts from './Profile__MyPosts/Profile__MyPosts';
 
-class Profile_Api_Container extends React.Component {
+const ProfilePage = () => {
+  const userId = useMatch('profile/:userId/');
+  const profilePage = useSelector(state => state.profilePage);
+  const dispatch = useDispatch();
+  const { profile, isLoading, status } = profilePage;
 
-    componentDidMount() {
-        this.props.myProfile(this.props.match)
-    }
+  useEffect(() => {
+    dispatch(myProfile(userId));
+  }, []);
 
-    render() {
-        //if (!this.props.isAuth) return <Navigate to='/login'/>
-        return <Profile {...this.props}/>
-    }
-}
-let mapStateToProps = (state) => {
-    return {
-        id : state.auth.id,
-        profilePage: state.profilePage,
-        newPostChange : state.profilePage.newPostChange,
-        profile : state.profilePage.profile,
-        isLoading : state.profilePage.isLoading,
-        status : state.profilePage.status
-    }
-}
+  const setStatus = useCallback(() => dispatch(setStatus()), [])
 
-let ProfileMatch = (props) => {
-    const match = useMatch('profile/:userId/')
-    return <Profile_Api_Container {...props} match={match}/>
-}
+  return (
+      <div className={classes.profile}>
+        <div className={classes.body}>
+          <img src={img} alt="" className={classes.img} />
+          <Profile__data profile={profile}
+                         isLoading={isLoading}
+                         status={status}
+                         setStatus={setStatus} />
+          <Profile__MyPosts profilePage={profilePage}
+                            addNewPostText={text => dispatch(addNewPostText(text))}
+                            addPostActionCreator={() => dispatch(addPostActionCreator())}
+                            addLike={id => dispatch(addLike(id))}
+                            removeLike={id => dispatch(removeLike(id))} />
+        </div>
+      </div>
+  );
+};
 
-const Profile_Container = compose(
-    withRedirect,
-    connect(mapStateToProps, {
-        addPostActionCreator,
-        addNewPostText,
-        addLike,
-        removeLike,
-        setUserProfile,
-        myProfile,
-        setStatus
-    })
-)(ProfileMatch)
-
-
-export default Profile_Container
+export default ProfilePage;
