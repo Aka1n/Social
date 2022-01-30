@@ -1,8 +1,8 @@
-import classes from './Profile__status.module.css'
+import classes from './ProfileStatus.module.css'
 import * as React from "react";
 import Loading from "../../../../common/Loading/Loading";
 
-class Profile__status extends React.Component{
+class ProfileStatus extends React.Component{
 
     state = {
         editMode : false,
@@ -56,4 +56,4 @@ class Profile__status extends React.Component{
     }
 }
 
-export default Profile__status
+export default ProfileStatus

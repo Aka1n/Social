@@ -1,11 +1,11 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import classes from './Profile__Post.module.css'
+import classes from './ProfilePost.module.css'
 import avatar from '../../../../img/IMG_7839.JPG'
 
 
 
-function Profile__Post(props) {
+function ProfilePost(props) {
 
     let addLike = () => props.addLike(props.id)
     let removeLike = () => props.removeLike(props.id)
@@ -29,4 +29,4 @@ function Profile__Post(props) {
     )
 }
 
-export default Profile__Post
+export default ProfilePost

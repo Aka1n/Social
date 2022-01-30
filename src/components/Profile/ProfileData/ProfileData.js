@@ -1,11 +1,11 @@
-import classes from './Profile__data.module.css'
+import classes from './ProfileData.module.css'
 import Loading from "../../../common/Loading/Loading";
 import defaultAvatar from '../../../img/default-user.png'
-import Profile__status from "./Profile__status/Profile__status";
+import ProfileStatus from "./ProfileStatus/ProfileStatus";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFacebookSquare, faGithubSquare, faInstagramSquare, faTwitterSquare, faVk, faYoutube} from '@fortawesome/free-brands-svg-icons';
 
-function Profile__data(props) {
+function ProfileData(props) {
     if (!props.profile || props.isLoading) return <Loading/>
     else return (
         <div className={classes.profile}>
@@ -14,7 +14,7 @@ function Profile__data(props) {
                     props.profile.photos.large} alt=""/>
                 <div className={classes.data}>
                     <div className={classes.item}>{props.profile.fullName}</div>
-                    <Profile__status status={props.status} setStatus={props.setStatus} isLoading={props.isLoading}/>
+                    <ProfileStatus status={props.status} setStatus={props.setStatus} isLoading={props.isLoading}/>
                     <div className={classes.item}>Date of Birth : 2 january</div>
                     <div className={classes.item}>City : Minsk</div>
                     <div className={classes.item}>Education : BSU 11</div>
@@ -35,4 +35,4 @@ function Profile__data(props) {
     )
 }
 
-export default Profile__data
+export default ProfileData

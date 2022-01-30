@@ -28,12 +28,11 @@ function authReducer(state = interfaceState, action) {
 
 export let setUserData = (id, login, email) => ({type : SET_USER_DATA, data : {id, login, email}})
 
-export let setImg = (img) => ({type : SET_IMG, img : img})
+export let setImg = img => ({type : SET_IMG, img : img})
 
 export const setLoading = loading => ({type: SET_USER_DATA_LOADING, payload: loading})
 
-export let getLogin = (id) => {
-    return (dispatch) => {
+export let getLogin = id => dispatch => {
         dispatch(setLoading(true))
         authApi.getAuthMe().then(data => {
             if (data.resultCode === 0 ) {
@@ -48,6 +47,5 @@ export let getLogin = (id) => {
             dispatch(setLoading(false))
         })
     }
-}
 
 export default authReducer

@@ -1,4 +1,4 @@
-import classes from './Find_Users_User.module.css'
+import classes from './FindUsersUser.module.css'
 import img from '../../../img/default-user.png'
 import {NavLink} from "react-router-dom";
 

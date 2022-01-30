@@ -1,13 +1,12 @@
-import classes from "./Profile__Textarea.module.css";
+import classes from "./ProfileTextarea.module.css";
 
-function Profile__Textarea(props) {
+function ProfileTextarea(props) {
 
     let addPostText = (element) => {
         let text = element.target.value
         props.addNewPostText(text)
     }
-    let addPost = () => {
-        props.addPostActionCreator()}
+    let addPost = () => props.addPostActionCreator()
 
     return (
         <div className={classes.textarea}>
@@ -19,4 +18,4 @@ function Profile__Textarea(props) {
     )
 }
 
-export default Profile__Textarea
+export default ProfileTextarea
