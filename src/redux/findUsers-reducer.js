@@ -46,7 +46,7 @@ export const setUsers = (users) => ({type : SET_USERS, users : users})
 export const setTotalPages = (pages) => ({type : SET_TOTAL_PAGES, pages : pages})
 export const setPageNumber = (page) => ({type : SET_PAGE_NUMBER, page : page})
 export const isLoading = (loading) => ({type : IS_LOADING, loading : loading})
-export const toggleUserFollowLoading = (loading, id) => ({type : IS_FOLLOW_LOADING, loading: loading, id : id})
+export const toggleUserFollowLoading = (loading, id) => ({type : IS_FOLLOW_LOADING, loading, id})
 
 export const getUsers = (users, pageNumber) => {
     return (dispatch) => {

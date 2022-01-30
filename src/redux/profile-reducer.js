@@ -99,7 +99,7 @@ export let myProfile = (match) => {
 
     }
 }
-export let setStatus = (status) => (dispatch) => {
+export let setStatus = status => dispatch => {
     return profileApi.setStatus(status).then(data => {
         if (data.resultCode === 0) {
             dispatch(getStatus(status))
