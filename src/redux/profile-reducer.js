@@ -84,7 +84,7 @@ export let myProfile = (match) => {
         dispatch(isLoading(true))
                 authApi.getAuthMe().then(data => {
                     if (data.resultCode === 0 ) {
-                        let userId
+                        let userId = ''
                         if  (!match) userId = data.data.id
                         else userId = match.params.userId
                         profileApi.getProfile(userId).then(data => {

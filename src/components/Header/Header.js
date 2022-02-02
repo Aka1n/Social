@@ -13,7 +13,7 @@ function Header(props) {
                 </div>
                 <div className={classes.body_login}>
                     <img className={classes.avatar} src={props.img ? props.img : defaultAva} alt=""/>
-                    {props.isAuth ? <NavLink to='/login' className={classes.login}>{props.login}</NavLink> :
+                    {props.isAuth ? <div onClick={() => props.setLogOut()} className={classes.login}>{props.login}</div> :
                         <NavLink to='/login' className={classes.login}>login</NavLink>}
                 </div>
             </header>

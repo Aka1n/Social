@@ -9,6 +9,7 @@ class ProfileStatus extends React.Component{
         status : this.props.status,
         isLoading : false
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.status !== this.props.status) {
             this.setState({

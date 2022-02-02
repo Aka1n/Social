@@ -1,14 +1,25 @@
-import classes from './Navigation.module.css'
-import Navigation__SideBar from "./Navigation__SideBar/Navigation__SideBar";
-import Navigation__Friends from "./Navigation__Friends/Navigation__Friends";
+import {useDispatch, useSelector} from "react-redux";
+import {myProfile} from "../../redux/navigation-reducer";
+import classes from "./Navigation.module.css";
+import NavigationSideBar from "./NavigationSideBar/NavigationSideBar";
+import NavigationFriends from "./NavigationFriends/NavigationFriends";
+import {useMatch} from "react-router-dom";
 
+const Navigation = () => {
 
-function Navigation(props) {
+    const state = useSelector(state => ({
+        navigation : state.navigation,
+        id : state.auth.id,
+        profileId : state.profilePage.profile
+    }))
+
+    const dispatch = useDispatch()
+
     return (
         <div className={classes.back}>
             <div className={classes.navigation}>
-                <Navigation__SideBar myProfile={props.myProfile} id={props.id} profileId={props.profileId}/>
-                <Navigation__Friends friends={props.navigation.friends} />
+                <NavigationSideBar myProfile={id => dispatch(myProfile(id))} id={state.id} profileId={state.profileId}/>
+                <NavigationFriends friends={state.navigation.friends} />
             </div>
         </div>
     )
