@@ -29,6 +29,17 @@ export const followApi = {
 export const authApi = {
     getAuthMe() {
         return instance.get('auth/me').then(resolve => resolve.data)
+    },
+    getSignIn({email, password, rememberMe, captcha}) {
+        return instance.post('auth/login', {
+            email,
+            password,
+            rememberMe,
+            captcha
+        }).then(resolve => resolve.data)
+    },
+    getLogOut() {
+        return instance.delete('auth/login').then(resolve => resolve.data)
     }
 }
 
@@ -41,8 +52,14 @@ export const profileApi = {
     },
     setStatus(status) {
         return instance.put('/profile/status/', {
-            status : status
+            status
         }).then(resolve => resolve.data)
     }
 
+}
+
+export const securityApi = {
+    getCaptcha() {
+        return instance.get('/security/get-captcha-url').then(resolve => resolve.data)
+    }
 }

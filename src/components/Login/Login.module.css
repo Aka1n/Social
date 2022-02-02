@@ -1,18 +1,62 @@
 .login {
-
+    width: 100%;
 }
-
+.body {
+    width: 100%;
+}
 .login form {
-    display: flex;
-    flex-direction: column;
+    margin-top: 20px;
+    background-color: LightGray;
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
 }
-.login label {
+.login .input {
     display: flex;
-    flex-direction: column;
-}
-.login input {
-    display: flex;
-    background-color: rgba(220,220,220,0.5);
     border: solid 1px slategray;
     padding: 10px;
+    margin: 10px 0px 10px 0px;
+    width: 100%;
+}
+.login input:disabled {
+    opacity: 0.5;
+}
+.login .input:focus {
+    border: solid 1px darkblue;
+    outline : solid 2px darkblue;
+}
+.remember {
+    display: flex;
+    align-items: center;
+}
+.checkbox {
+    margin-right: 10px;
+}
+.button {
+    background-color: darkblue;
+    padding: 10px;
+    margin: 10px 0px 0px 0px;
+    color: white;
+}
+.error {
+    color: darkred;
+    margin-bottom: 5px;
+}
+
+.input_error {
+    padding: 10px;
+    margin: 10px 0px 10px 0px;
+    width: 100%;
+    border: solid 1px darkred;
+    outline : solid 2px darkred;
+}
+.login p {
+    display: flex;
+    align-items: center;
+}
+.login p .icon {
+    margin-right: 5px;
+}
+.captcha {
+    margin-top: 10px;
 }

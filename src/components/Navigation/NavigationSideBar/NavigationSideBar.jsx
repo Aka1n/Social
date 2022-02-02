@@ -1,11 +1,11 @@
-import classes from './Navigation__SideBar.module.css'
+import classes from './NavigationSideBar.module.css'
 import {NavLink} from "react-router-dom";
 
-function Navigation__SideBar(props) {
+function NavigationSideBar(props) {
     return (
         <div className={classes.body}>
             <div className={classes.item}>
-                <NavLink to='/profile' onClick={() => (props.profileId.userId !== props.id) ? props.myProfile(props.id) : null}
+                <NavLink to='/profile' onClick={() => (props.profileId.userId !== props.id) ? props.myProfile(props.id) : ''}
                          className={i => i.isActive ? classes.active : classes.profile}>Profile</NavLink>
             </div>
             <div className={classes.item}>
@@ -27,4 +27,4 @@ function Navigation__SideBar(props) {
     )
 }
 
-export default Navigation__SideBar
+export default NavigationSideBar

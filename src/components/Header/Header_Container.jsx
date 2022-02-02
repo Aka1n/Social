@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import React from "react";
 import Header from "./Header";
-import {getLogin} from "../../redux/auth-reducer";
+import {getLogin, setLogOut} from "../../redux/auth-reducer";
 import {compose} from "redux";
 
 class Header_Api_Container extends React.Component {
@@ -19,10 +19,11 @@ let mapStateToProps = (state) => ({
     id : state.auth.id,
     login : state.auth.login,
     email : state.auth.email,
-    isAuth : state.auth.isAuth
+    isAuth : state.auth.isAuth,
 })
 export default compose(
     connect(mapStateToProps, {
-        getLogin
+        getLogin,
+        setLogOut
     })
 )(Header_Api_Container)
