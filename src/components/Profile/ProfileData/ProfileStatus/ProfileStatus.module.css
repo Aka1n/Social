@@ -1,7 +1,6 @@
 .status {
     margin-bottom: 25px;
     font-weight: normal;
-    cursor: pointer;
 }
 .input {
     display: flex;
@@ -9,12 +8,20 @@
     border: solid 1px slategray;
     padding: 10px;
 }
-.text {
+.loading {
+    color: rgba(0,0,0,0);
+    background-color: rgba(220,220,220,0.5);
+    margin-right: 5px;
+}
+.body {
+}
+.hover {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
 }
-.text:after {
+.hover:after {
     transition: 300ms;
     content: "\f304";
     font-family: "Font Awesome 5 Free";
@@ -22,6 +29,6 @@
     margin-left: 20px;
     font-weight: bold;
 }
-.text:hover:after {
+:hover:after {
     opacity: 0.5;
 }

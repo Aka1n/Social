@@ -14,7 +14,7 @@ function ProfileData(props) {
                     props.profile.photos.large} alt=""/>
                 <div className={classes.data}>
                     <div className={classes.item}>{props.profile.fullName}</div>
-                    <ProfileStatus status={props.status} setStatus={props.setStatus} isLoading={props.isLoading}/>
+                    <ProfileStatus me={props.me} id={props.id} status={props.status} setStatus={props.setStatus} isLoading={props.isLoading}/>
                     <div className={classes.item}>Date of Birth : 2 january</div>
                     <div className={classes.item}>City : Minsk</div>
                     <div className={classes.item}>Education : BSU 11</div>

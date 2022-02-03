@@ -1,11 +1,11 @@
 .body_loading {
     display: flex;
-    flex: 1 0 auto;
-    width: 100%;
+    flex: 1 1 auto;
     align-items: center;
     justify-content: center;
+    min-height: 150px;
 
 }
 .loading {
-    width: 100px;
+    width: 60px;
 }
