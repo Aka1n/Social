@@ -5,7 +5,7 @@ import {
     addPostActionCreator,
     myProfile,
     removeLike,
-    setStatus
+    setStatus,
 } from '../../redux/profile-reducer';
 import * as React from 'react';
 import {useCallback, useEffect} from 'react';
@@ -19,14 +19,16 @@ import {withRedirect} from "../../hoc/withRedirect";
 const ProfilePage = () => {
     const userId = useMatch('profile/:userId/');
     const profilePage = useSelector(state => state.profilePage);
+    const id = useSelector(state => state.auth.id)
     const dispatch = useDispatch();
     const {profile, isLoading, status} = profilePage;
+
 
     useEffect(() => {
         dispatch(myProfile(userId));
     }, []);
 
-    const getStatus = useCallback(() => dispatch(setStatus()), [])
+    const getStatus = useCallback(status => dispatch(setStatus(status)), [])
 
     return (
         <div className={classes.profile}>
@@ -35,7 +37,10 @@ const ProfilePage = () => {
                 <ProfileData profile={profile}
                              isLoading={isLoading}
                              status={status}
-                             setStatus={getStatus}/>
+                             setStatus={getStatus}
+                             id={userId}
+                             me={id}/>
+
                 <ProfileMyPosts profilePage={profilePage}
                                 addNewPostText={text => dispatch(addNewPostText(text))}
                                 addPostActionCreator={() => dispatch(addPostActionCreator())}
