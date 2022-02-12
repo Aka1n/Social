@@ -15,15 +15,20 @@ const interfaceState = {
   totalPages: 0,
   isLoading: false,
   userFollowLoading: [],
-
 };
 
 function findUsersReducer(state = interfaceState, action) {
   switch (action.type) {
     case FOLLOW:
-      return { ...state, users: state.users.map((u) => ((u.id === action.id) ? { ...u, followed: true } : u)) };
+      return {
+        ...state,
+        users: state.users.map((u) => (u.id === action.id ? { ...u, followed: true } : u)),
+      };
     case UN_FOLLOW:
-      return { ...state, users: state.users.map((u) => ((u.id === action.id) ? { ...u, followed: false } : u)) };
+      return {
+        ...state,
+        users: state.users.map((u) => (u.id === action.id ? { ...u, followed: false } : u)),
+      };
     case SET_USERS:
       return { ...state, users: action.users };
     case SET_TOTAL_PAGES:
@@ -35,7 +40,8 @@ function findUsersReducer(state = interfaceState, action) {
     case IS_FOLLOW_LOADING:
       return {
         ...state,
-        userFollowLoading: action.loading ? [...state.userFollowLoading, action.id]
+        userFollowLoading: action.loading
+          ? [...state.userFollowLoading, action.id]
           : state.userFollowLoading.filter((userId) => userId !== action.id),
       };
     default:
@@ -49,7 +55,11 @@ export const setUsers = (users) => ({ type: SET_USERS, users });
 export const setTotalPages = (pages) => ({ type: SET_TOTAL_PAGES, pages });
 export const setPageNumber = (page) => ({ type: SET_PAGE_NUMBER, page });
 export const isLoading = (loading) => ({ type: IS_LOADING, loading });
-export const toggleUserFollowLoading = (loading, id) => ({ type: IS_FOLLOW_LOADING, loading, id });
+export const toggleUserFollowLoading = (loading, id) => ({
+  type: IS_FOLLOW_LOADING,
+  loading,
+  id,
+});
 
 export const getUsers = (users, pageNumber) => (dispatch) => {
   dispatch(isLoading(true));
@@ -58,30 +68,41 @@ export const getUsers = (users, pageNumber) => (dispatch) => {
       dispatch(setUsers(data.items));
     });
   }
-  usersApi.getUsers().then((data) => {
-    dispatch(setTotalPages(Math.ceil(data.totalCount / 12)));
-  }).then((resolve) => dispatch(isLoading(false)));
+  usersApi
+    .getUsers()
+    .then((data) => {
+      dispatch(setTotalPages(Math.ceil(data.totalCount / 12)));
+    })
+    .then((resolve) => dispatch(isLoading(false)));
 };
 export const getFollowThunk = (userId) => (dispatch) => {
   dispatch(toggleUserFollowLoading(true, userId));
-  followApi.getFollow(userId).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(follow(userId));
-    }
-  }).finally(() => dispatch(toggleUserFollowLoading(false, userId)));
+  followApi
+    .getFollow(userId)
+    .then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(follow(userId));
+      }
+    })
+    .finally(() => dispatch(toggleUserFollowLoading(false, userId)));
 };
 export const getUnFollowThunk = (userId) => (dispatch) => {
   dispatch(toggleUserFollowLoading(true, userId));
-  followApi.getUnFollow(userId).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(unFollow(userId));
-    }
-  }).finally(() => dispatch(toggleUserFollowLoading(false, userId)));
+  followApi
+    .getUnFollow(userId)
+    .then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(unFollow(userId));
+      }
+    })
+    .finally(() => dispatch(toggleUserFollowLoading(false, userId)));
 };
 export const setPage = (page) => (dispatch) => {
   dispatch(isLoading(true));
   dispatch(setPageNumber(page));
-  usersApi.getUsers(page).then((data) => dispatch(setUsers(data.items)))
+  usersApi
+    .getUsers(page)
+    .then((data) => dispatch(setUsers(data.items)))
     .then((resolve) => dispatch(isLoading(false)));
 };
 export default findUsersReducer;

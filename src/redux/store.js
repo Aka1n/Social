@@ -19,11 +19,7 @@ const store = {
       newMessageText: '',
     },
     navigation: {
-      friends: [
-        { name: 'Andrew' },
-        { name: 'Sasha' },
-        { name: 'Sveta' },
-      ],
+      friends: [{ name: 'Andrew' }, { name: 'Sasha' }, { name: 'Sveta' }],
     },
   },
   _render() {},

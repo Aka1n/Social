@@ -28,7 +28,8 @@ function dialogsReducer(state = interfaceState, action) {
       } else obj.id = cloneState.messages[cloneState.messages.length - 1].id + 1;
       if (cloneState.newMessageText.length === 0) {
         return cloneState;
-      } obj.message = cloneState.newMessageText;
+      }
+      obj.message = cloneState.newMessageText;
       cloneState.messages.push(obj);
       cloneState.newMessageText = '';
 

@@ -4,11 +4,7 @@ import { profileApi } from '../api/api';
 const IS_LOADING = 'IS_LOADING';
 
 const interfaceState = {
-  friends: [
-    { name: 'Andrew' },
-    { name: 'Sasha' },
-    { name: 'Sveta' },
-  ],
+  friends: [{ name: 'Andrew' }, { name: 'Sasha' }, { name: 'Sveta' }],
   isLoading: false,
 };
 
@@ -16,7 +12,8 @@ function navigationReducer(state = interfaceState, action) {
   switch (action.type) {
     case IS_LOADING:
       return { ...state, isLoading: action.loading };
-    default: return state;
+    default:
+      return state;
   }
 }
 

@@ -9,7 +9,10 @@ function ProfileTextarea(props) {
 
   return (
     <div className={classes.textarea}>
-      <textarea onChange={addPostText} value={props.profilePage.newPostChange} />
+      <textarea
+        onChange={addPostText}
+        value={props.profilePage.newPostChange}
+      />
       <div className={classes.button}>
         <button onClick={addPost}>Send</button>
       </div>

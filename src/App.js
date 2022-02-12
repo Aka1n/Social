@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Profile from './components/Profile/Profile';
 import Navigation from './components/Navigation/Navigation';
-import Dialogs_Container from './components/Dialogs/Dialogs_Container';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Header_Container from './components/Header/Header_Container.jsx';
 import Login from './components/Login/Login.jsx';
 import FindUsers from './components/FindUsres/FindUsers';
@@ -18,7 +18,7 @@ function App() {
           <Routes>
             <Route path="/profile/:userId" element={<Profile />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/dialogs/*" element={<Dialogs_Container />} />
+            <Route path="/dialogs/*" element={<DialogsContainer />} />
             <Route path="/findusers/*" element={<FindUsers />} />
             <Route path="/login" element={<Login />} />
           </Routes>

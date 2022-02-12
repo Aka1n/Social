@@ -10,19 +10,20 @@ const instance = axios.create({
 
 export const usersApi = {
   getUsers(pageNumber) {
-    return instance.get(`users?count=12&page=${pageNumber}`)
+    return instance
+      .get(`users?count=12&page=${pageNumber}`)
       .then((resolve) => resolve.data);
   },
 };
 
 export const followApi = {
   getFollow(userId) {
-    return instance.post(`follow/${userId}`, {})
+    return instance
+      .post(`follow/${userId}`, {})
       .then((resolve) => resolve.data);
   },
   getUnFollow(userId) {
-    return instance.delete(`follow/${userId}`)
-      .then((resolve) => resolve.data);
+    return instance.delete(`follow/${userId}`).then((resolve) => resolve.data);
   },
 };
 
@@ -33,12 +34,14 @@ export const authApi = {
   getSignIn({
     email, password, rememberMe, captcha,
   }) {
-    return instance.post('auth/login', {
-      email,
-      password,
-      rememberMe,
-      captcha,
-    }).then((resolve) => resolve.data);
+    return instance
+      .post('auth/login', {
+        email,
+        password,
+        rememberMe,
+        captcha,
+      })
+      .then((resolve) => resolve.data);
   },
   getLogOut() {
     return instance.delete('auth/login').then((resolve) => resolve.data);
@@ -50,18 +53,23 @@ export const profileApi = {
     return instance.get(`/profile/${userId}`).then((resolve) => resolve.data);
   },
   getStatus(userId) {
-    return instance.get(`/profile/status/${userId}`).then((resolve) => resolve.data);
+    return instance
+      .get(`/profile/status/${userId}`)
+      .then((resolve) => resolve.data);
   },
   setStatus(status) {
-    return instance.put('/profile/status/', {
-      status,
-    }).then((resolve) => resolve.data);
+    return instance
+      .put('/profile/status/', {
+        status,
+      })
+      .then((resolve) => resolve.data);
   },
-
 };
 
 export const securityApi = {
   getCaptcha() {
-    return instance.get('/security/get-captcha-url').then((resolve) => resolve.data);
+    return instance
+      .get('/security/get-captcha-url')
+      .then((resolve) => resolve.data);
   },
 };

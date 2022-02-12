@@ -33,7 +33,8 @@ function profileReducer(state = interfaceState, action) {
 
       if (cloneState.newPostChange.length === 0) {
         return state;
-      } obj.text = cloneState.newPostChange;
+      }
+      obj.text = cloneState.newPostChange;
 
       obj.likes = 0;
       obj.liked = false;
@@ -85,7 +86,10 @@ export const addPostActionCreator = () => ({ type: ADD_POST });
 export const addNewPostText = (text) => ({ type: ADD_NEW_POST_TEXT, text });
 export const addLike = (id) => ({ type: ADD_LIKE, id });
 export const removeLike = (id) => ({ type: REMOVE_LIKE, id });
-export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
+export const setUserProfile = (profile) => ({
+  type: SET_USER_PROFILE,
+  profile,
+});
 export const isLoading = (loading) => ({ type: IS_LOADING, loading });
 export const addStatus = (status) => ({ type: GET_STATUS, status });
 export const myProfile = (match) => (dispatch) => {

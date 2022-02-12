@@ -37,11 +37,17 @@ function authReducer(state = interfaceState, action) {
   }
 }
 
-export const setUserData = (id, login, email) => ({ type: SET_USER_DATA, data: { id, login, email } });
+export const setUserData = (id, login, email) => ({
+  type: SET_USER_DATA,
+  data: { id, login, email },
+});
 
 export const setImg = (img) => ({ type: SET_IMG, img });
 
-export const setLoading = (loading) => ({ type: SET_USER_DATA_LOADING, payload: loading });
+export const setLoading = (loading) => ({
+  type: SET_USER_DATA_LOADING,
+  payload: loading,
+});
 
 export const setErrors = (err) => ({ type: SET_ERRORS, payload: err });
 
@@ -51,7 +57,8 @@ export const setCaptchaUrl = (url) => ({ type: SET_CAPTCHA_URL, url });
 
 export const setSignIn = (loginData) => (dispatch) => {
   dispatch(setLoading(true));
-  authApi.getSignIn(loginData)
+  authApi
+    .getSignIn(loginData)
     .then((data) => {
       if (data.resultCode === 10) {
         return securityApi.getCaptcha().then((captcha) => {
@@ -92,17 +99,21 @@ export const setLogOut = () => (dispatch) => {
 
 export let getLogin = (id) => (dispatch) => {
   dispatch(setLoading(true));
-  authApi.getAuthMe().then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(setUserData(data.data.id, data.data.login, data.data.email));
-      dispatch(setIsAuth(true));
+  authApi
+    .getAuthMe()
+    .then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(setUserData(data.data.id, data.data.login, data.data.email));
+        dispatch(setIsAuth(true));
+        dispatch(setLoading(false));
+      }
+    })
+    .then(() => profileApi.getProfile(id).then((data) => {
+      dispatch(setImg(data.photos.small));
+    }))
+    .catch((err) => {
       dispatch(setLoading(false));
-    }
-  }).then(() => profileApi.getProfile(id).then((data) => {
-    dispatch(setImg(data.photos.small));
-  })).catch((err) => {
-    dispatch(setLoading(false));
-  });
+    });
 };
 
 export default authReducer;

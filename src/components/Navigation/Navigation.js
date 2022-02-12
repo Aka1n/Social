@@ -17,7 +17,11 @@ function Navigation() {
   return (
     <div className={classes.back}>
       <div className={classes.navigation}>
-        <NavigationSideBar myProfile={(id) => dispatch(myProfile(id))} id={state.id} profileId={state.profileId} />
+        <NavigationSideBar
+          myProfile={(id) => dispatch(myProfile(id))}
+          id={state.id}
+          profileId={state.profileId}
+        />
         <NavigationFriends friends={state.navigation.friends} />
       </div>
     </div>

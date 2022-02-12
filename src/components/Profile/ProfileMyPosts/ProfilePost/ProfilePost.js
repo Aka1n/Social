@@ -16,8 +16,19 @@ function ProfilePost(props) {
         <div className={classes.item}>
           <div className={classes.text}>{props.message}</div>
           <div className={classes.like}>
-            {(props.liked) ? <FontAwesomeIcon onClick={removeLike} className={`${classes.icon} ${classes.active}`} icon={faHeart} />
-              : <FontAwesomeIcon onClick={addLike} className={classes.icon} icon={faHeart} />}
+            {props.liked ? (
+              <FontAwesomeIcon
+                onClick={removeLike}
+                className={`${classes.icon} ${classes.active}`}
+                icon={faHeart}
+              />
+            ) : (
+              <FontAwesomeIcon
+                onClick={addLike}
+                className={classes.icon}
+                icon={faHeart}
+              />
+            )}
             <div className={classes.likes}>{props.likes}</div>
           </div>
         </div>
