@@ -1,59 +1,48 @@
-import { authApi, profileApi, securityApi } from '../api/api';
+import {authApi, profileApi, securityApi} from '../api/api';
+import {createSlice, createSelector} from "@reduxjs/toolkit";
 
-const SET_USER_DATA = 'SET_USER_DATA';
-const SET_USER_DATA_LOADING = 'SET_USER_DATA_LOADING';
-const SET_IMG = 'SET_IMG';
-const SET_ERRORS = 'SET_ERRORS';
-const SET_IS_AUTH = 'SET_IS_AUTH';
-const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL';
 
-const interfaceState = {
-  id: null,
-  login: null,
-  email: null,
-  img: null,
+const initialState = {
+  user: {
+    id: null,
+    login: null,
+    email: null,
+    img: null,
+  },
   isAuth: false,
   isLoading: true,
   errors: '',
   captchaUrl: '',
 };
 
-function authReducer(state = interfaceState, action) {
-  switch (action.type) {
-    case SET_USER_DATA:
-      return { ...state, ...action.data };
-    case SET_USER_DATA_LOADING:
-      return { ...state, isLoading: action.payload };
-    case SET_IMG:
-      return { ...state, img: action.img };
-    case SET_ERRORS:
-      return { ...state, errors: action.payload };
-    case SET_IS_AUTH:
-      return { ...state, isAuth: action.payload };
-    case SET_CAPTCHA_URL:
-      return { ...state, captchaUrl: action.url };
-    default:
-      return state;
+
+const authSlice = createSlice({
+  name: "AuthSlice",
+  initialState,
+  reducers: {
+    setUserData: (state, action) => {
+      state.user = action.payload
+    },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload
+    },
+    setImg: (state, action) => {
+      state.user.img = action.payload
+    },
+    setErrors: (state, action) => {
+      state.errros = action.payload
+    },
+    setIsAuth: (state, action) => {
+      state.isAuth = action.payload
+    },
+    setCaptchaUrl: (state, action) => {
+      state.captchaUrl = action.payload
+    },
   }
-}
+})
 
-export const setUserData = (id, login, email) => ({
-  type: SET_USER_DATA,
-  data: { id, login, email },
-});
+const {setUserData,setImg,setCaptchaUrl,setErrors,setIsAuth,setLoading} = authSlice.actions
 
-export const setImg = (img) => ({ type: SET_IMG, img });
-
-export const setLoading = (loading) => ({
-  type: SET_USER_DATA_LOADING,
-  payload: loading,
-});
-
-export const setErrors = (err) => ({ type: SET_ERRORS, payload: err });
-
-export const setIsAuth = (payload) => ({ type: SET_IS_AUTH, payload });
-
-export const setCaptchaUrl = (url) => ({ type: SET_CAPTCHA_URL, url });
 
 export const setSignIn = (loginData) => (dispatch) => {
   dispatch(setLoading(true));
@@ -103,7 +92,7 @@ export let getLogin = (id) => (dispatch) => {
     .getAuthMe()
     .then((data) => {
       if (data.resultCode === 0) {
-        dispatch(setUserData(data.data.id, data.data.login, data.data.email));
+        dispatch(setUserData(data.data));
         dispatch(setIsAuth(true));
         dispatch(setLoading(false));
       }
@@ -116,4 +105,4 @@ export let getLogin = (id) => (dispatch) => {
     });
 };
 
-export default authReducer;
+export default authSlice.reducer;

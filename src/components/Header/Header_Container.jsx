@@ -16,9 +16,9 @@ class Header_Api_Container extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    id : state.auth.id,
-    login : state.auth.login,
-    email : state.auth.email,
+    id : state.auth.user.id,
+    login : state.auth.user.login,
+    email : state.auth.user.email,
     isAuth : state.auth.isAuth,
 })
 export default compose(

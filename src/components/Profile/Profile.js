@@ -19,7 +19,7 @@ import { withRedirect } from '../../hoc/withRedirect';
 function ProfilePage() {
   const userId = useMatch('profile/:userId/');
   const profilePage = useSelector((state) => state.profilePage);
-  const id = useSelector((state) => state.auth.id);
+  const id = useSelector((state) => state.auth.user.id);
   const dispatch = useDispatch();
   const { profile, isLoading, status } = profilePage;
 

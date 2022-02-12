@@ -4,6 +4,7 @@
     "es2021": true
   },
   "extends": [
+    "react-app",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended",
     "plugin:react/recommended",
@@ -13,12 +14,11 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": "latest",
+    "ecmaVersion": 6,
     "sourceType": "module"
   },
   "plugins": [
-    "react",
-    "prettier"
+    "react"
   ],
   "rules": {
     "no-underscore-dangle": "off",
@@ -47,6 +47,13 @@
     "react/jsx-pascal-case" : "off",
     "import/extensions" : "off",
     "import/no-unresolved" : "off",
-    "no-undef" : "off"
+    "no-undef" : "off",
+    "linebreak-style": "off",
+    "import/order" : "off",
+    "indent" : "off",
+    "no-multiple-empty-lines" : "off",
+    "comma-dangle": "off",
+    "semi" : "off"
+
   }
 }

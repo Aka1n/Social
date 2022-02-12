@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import Profile from './components/Profile/Profile';
 import Navigation from './components/Navigation/Navigation';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+import DialogsContainer from './components/Dialogs/Dialogs_Container';
 import Header_Container from './components/Header/Header_Container.jsx';
 import Login from './components/Login/Login.jsx';
 import FindUsers from './components/FindUsres/FindUsers';

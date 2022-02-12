@@ -8,7 +8,7 @@ import NavigationFriends from './NavigationFriends/NavigationFriends';
 function Navigation() {
   const state = useSelector((state) => ({
     navigation: state.navigation,
-    id: state.auth.id,
+    id: state.auth.user.id,
     profileId: state.profilePage.profile,
   }));
 
