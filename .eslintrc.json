@@ -53,7 +53,7 @@
     "indent" : "off",
     "no-multiple-empty-lines" : "off",
     "comma-dangle": "off",
-    "semi" : "off"
-
+    "semi" : "off",
+    "tabWidth": 4
   }
 }

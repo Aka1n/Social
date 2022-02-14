@@ -1,53 +1,44 @@
-const ADD_NEW_MESSAGE = 'ADD-NEW-MESSAGE';
-const NEW_MESSAGE_TEXT = 'NEW-MESSAGE-TEXT';
+import {createSlice} from "@reduxjs/toolkit";
 
-const interfaceState = {
-  dialogs: [
-    { id: 1, name: 'Erik' },
-    { id: 2, name: 'Art' },
-    { id: 3, name: 'Kostiya' },
-    { id: 4, name: 'Dim' },
-  ],
-  messages: [],
-  newMessageText: '',
+
+const initialState = {
+    dialogs: [
+        {id: 1, name: 'Erik'},
+        {id: 2, name: 'Art'},
+        {id: 3, name: 'Kostiya'},
+        {id: 4, name: 'Dim'},
+    ],
+    messages: [],
+    newMessageText: '',
 };
 
-function dialogsReducer(state = interfaceState, action) {
-  let cloneState;
 
-  switch (action.type) {
-    case ADD_NEW_MESSAGE: {
-      cloneState = {
-        ...state,
-        messages: [...state.messages],
-      };
-      const obj = {};
+const dialogsSlice = createSlice({
+    name: "dialogsSlice",
+    initialState,
+    reducers: {
+        addNewMessage: (state, action) => {
 
-      if (cloneState.messages.length === 0) {
-        obj.id = 1;
-      } else obj.id = cloneState.messages[cloneState.messages.length - 1].id + 1;
-      if (cloneState.newMessageText.length === 0) {
-        return cloneState;
-      }
-      obj.message = cloneState.newMessageText;
-      cloneState.messages.push(obj);
-      cloneState.newMessageText = '';
+            const obj = {}
 
-      return cloneState;
+            if (state.messages.length === 0) {
+                obj.id = 1;
+            } else obj.id = state.messages[state.messages.length - 1].id + 1;
+
+            if (state.newMessageText.length === 0) return
+
+            obj.message = state.newMessageText;
+            state.messages.push(obj);
+            state.newMessageText = '';
+
+        },
+        addNewMessageText: (state, action) => {
+            state.newMessageText = action.payload
+        }
     }
-    case NEW_MESSAGE_TEXT: {
-      cloneState = {
-        ...state,
-        newMessageText: action.text,
-      };
-      return cloneState;
-    }
-    default:
-      return state;
-  }
-}
+})
 
-export const addNewMessageText = (text) => ({ type: NEW_MESSAGE_TEXT, text });
-export const addNewMessage = () => ({ type: ADD_NEW_MESSAGE });
+export const {addNewMessageText, addNewMessage} = dialogsSlice.actions
 
-export default dialogsReducer;
+
+export default dialogsSlice.reducer;

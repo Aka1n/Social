@@ -1,6 +1,6 @@
-import classes from './Dialogs__TextArea.module.css'
+import classes from './DialogsTextArea.module.css'
 
-function Dialogs__TextArea(props) {
+function DialogsTextArea(props) {
 
     let addMessageText = (element) => {
         let text = element.target.value
@@ -17,4 +17,4 @@ function Dialogs__TextArea(props) {
     )
 }
 
-export default Dialogs__TextArea
+export default DialogsTextArea

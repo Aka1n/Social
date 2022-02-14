@@ -51,6 +51,7 @@ const Login = () => {
     }
 
     useEffect(() => {
+
         if (state.errors === signErrors.valid || state.errors === signErrors.emailPass) {
             setError("email", {
                 type: "manual",
@@ -87,7 +88,8 @@ const Login = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <label>
                         Login:
-                        <input autoFocus={state.errors !== signErrors.captcha} className={errors?.email ? classes.input_error : classes.input}
+                        <input autoFocus={state.errors !== signErrors.captcha}
+                               className={errors?.email ? classes.input_error : classes.input}
                                placeholder={'Email...'}  {...register('email', {
                             required: 'Enter email',
                             pattern: {
@@ -101,7 +103,8 @@ const Login = () => {
                     </label>
                     <label>
                         Password:
-                        <input autoFocus={state.errors === signErrors.captcha} type='password' className={errors?.password ? classes.input_error : classes.input}
+                        <input autoFocus={state.errors === signErrors.captcha}
+                               type='password' className={errors?.password ? classes.input_error : classes.input}
                                placeholder={'Password...'} {...register('password', {
                             required: 'Enter password'
                         })}/>
@@ -116,7 +119,9 @@ const Login = () => {
                     </div>
                     {state.captchaUrl && <div className={classes.captcha}>
                         <img src={state.captchaUrl} alt=""/>
-                        <input className={errors?.captcha ? classes.input_error : classes.input} {...register("captcha", {
+                        <input
+                            className={errors?.captcha ? classes.input_error : classes.input}
+                            {...register("captcha", {
                             required: "Enter characters from the picture"
                         })}/>
                         {errors.captcha && <p className={classes.error}>

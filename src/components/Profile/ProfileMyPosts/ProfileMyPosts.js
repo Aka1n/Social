@@ -1,9 +1,10 @@
-import classes from './Profile__MyPosts.module.css';
-import ProfilePost from './ProfilePost/ProfilePost';
+import classes from './ProfileMyPosts.module.css';
+import ProfilePost from './ProfilePost/ProfilePost.js';
 import ProfileTextarea from './ProfileTextarea/ProfileTextarea';
 
 function ProfileMyPosts(props) {
-  const Posts = (posts) => posts.map((el) => (
+
+  const Posts = posts => posts.map(el => (
     <ProfilePost
       likes={el.likes}
       message={el.text}
