@@ -1,6 +1,6 @@
 import './App.css';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Profile from './components/Profile/Profile';
 import Navigation from './components/Navigation/Navigation';
 import Login from './components/Login/Login.jsx';
@@ -8,6 +8,8 @@ import FindUsers from './components/FindUsres/FindUsers';
 import AuthRedirect from "./components/AuthRedirect";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Header from "./components/Header/Header";
+import InitiationRedirect from "./components/InitiationRedirect";
+
 
 function App() {
     return (
@@ -17,6 +19,9 @@ function App() {
                 <div className="main">
                     <Navigation/>
                     <Routes>
+                        <Route path="/" element={
+                            <InitiationRedirect/>
+                        }/>
                         <Route path="/profile/:userId" element={
                             <AuthRedirect>
                                 <Profile/>
