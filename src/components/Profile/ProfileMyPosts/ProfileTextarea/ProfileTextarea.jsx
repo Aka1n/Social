@@ -1,4 +1,4 @@
-import classes from './ProfileTextarea.module.css';
+import classes from "./ProfileTextarea.module.css";
 
 function ProfileTextarea(props) {
   const addPostText = (element) => {

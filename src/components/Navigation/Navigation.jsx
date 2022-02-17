@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { myProfile } from '../../redux/navigation-reducer';
-import classes from './Navigation.module.css';
-import NavigationSideBar from './NavigationSideBar/NavigationSideBar';
-import NavigationFriends from './NavigationFriends/NavigationFriends';
+import { useDispatch, useSelector } from "react-redux";
+import { myProfile } from "../../redux/navigation-reducer";
+import classes from "./Navigation.module.css";
+import NavigationSideBar from "./NavigationSideBar/NavigationSideBar";
+import NavigationFriends from "./NavigationFriends/NavigationFriends";
 
 function Navigation() {
-
   const state = useSelector((state) => ({
     navigation: state.navigation,
     id: state.auth.user.id,

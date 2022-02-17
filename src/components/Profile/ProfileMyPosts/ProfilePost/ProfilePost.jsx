@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import classes from './ProfilePost.module.css';
-import avatar from '../../../../img/IMG_7839.JPG';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import classes from "./ProfilePost.module.css";
+import avatar from "../../../../img/IMG_7839.JPG";
 
 function ProfilePost(props) {
   const addLike = () => props.addLike(props.id);
