@@ -1,0 +1,14 @@
+.notfound {
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon {
+    font-size: 30px;
+    color: darkblue;
+    margin-right: 10px;
+}
+.text {
+    opacity: 0.5;
+}

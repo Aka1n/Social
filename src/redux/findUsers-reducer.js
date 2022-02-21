@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { followApi, usersApi } from "../api/api";
+import { createSlice } from '@reduxjs/toolkit';
+import { followApi, usersApi } from '../api/api';
 
 const initialState = {
   users: [],
@@ -8,19 +8,20 @@ const initialState = {
   totalPages: 0,
   isLoading: false,
   userFollowLoading: [],
+  searchUsers: '',
 };
 
 const findUsersSlice = createSlice({
-  name: "findUsersSlice",
+  name: 'findUsersSlice',
   initialState,
   reducers: {
     follow: (state, action) => {
       state.users = state.users.map((u) => (u.id === action.payload
-          ? { ...u, followed: true } : u));
+        ? { ...u, followed: true } : u));
     },
     unFollow: (state, action) => {
       state.users = state.users.map((u) => (u.id === action.payload
-          ? { ...u, followed: false } : u));
+        ? { ...u, followed: false } : u));
     },
     setUsers: (state, action) => {
       state.users = action.payload;
@@ -40,11 +41,13 @@ const findUsersSlice = createSlice({
         ? [...state.userFollowLoading, id]
         : state.userFollowLoading.filter((userId) => userId !== id);
     },
+    setSearchUsers : (state, action) => {
+      state.searchUsers = action.payload
+    },
   },
 });
 
-
-const {
+export const {
   follow,
   unFollow,
   setUsers,
@@ -52,21 +55,19 @@ const {
   setPageNumber,
   isLoading,
   isFollowLoading,
+  setSearchUsers,
 } = findUsersSlice.actions;
 
-export const getUsers = (users, pageNumber) => (dispatch) => {
+export const getUsers = (users, pageNumber, searchUsers) => (dispatch) => {
   dispatch(isLoading(true));
-  if (users === 0) {
-    usersApi.getUsers(pageNumber).then((data) => {
-      dispatch(setUsers(data.items));
-    });
-  }
-  usersApi
-    .getUsers()
-    .then((data) => {
-      dispatch(setTotalPages(Math.ceil(data.totalCount / 12)));
-    })
-    .then(() => dispatch(isLoading(false)));
+    let userData = ''
+    usersApi.getUsers(pageNumber, searchUsers)
+      .then((data) => {
+        userData = data
+        dispatch(setUsers(userData.items));
+      })
+      .then(() => dispatch(setTotalPages(Math.ceil(userData.totalCount / 12))))
+      .then(() => dispatch(isLoading(false)))
 };
 export const getFollowThunk = (userId) => (dispatch) => {
   dispatch(isFollowLoading({ loading: true, id: userId }));
@@ -90,13 +91,15 @@ export const getUnFollowThunk = (userId) => (dispatch) => {
     })
     .finally(() => dispatch(isFollowLoading({ loading: false, id: userId })));
 };
-export const setPage = (page) => (dispatch) => {
+export const setPage = (page, searchUsers) => (dispatch) => {
   dispatch(isLoading(true));
   dispatch(setPageNumber(page));
   usersApi
-    .getUsers(page)
+    .getUsers(page, searchUsers)
     .then((data) => dispatch(setUsers(data.items)))
     .then(() => dispatch(isLoading(false)));
 };
+
+
 
 export default findUsersSlice.reducer;

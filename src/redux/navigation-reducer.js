@@ -1,14 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { setUserProfile } from "./profile-reducer";
-import { profileApi } from "../api/api";
+import { createSlice } from '@reduxjs/toolkit';
+import { setUserProfile } from './profile-reducer';
+import { profileApi } from '../api/api';
 
 const initialState = {
-  friends: [{ name: "Andrew" }, { name: "Sasha" }, { name: "Sveta" }],
+  friends: [{ name: 'Andrew' }, { name: 'Sasha' }, { name: 'Sveta' }],
   isLoading: false,
 };
 
 const navigationSlice = createSlice({
-  name: "navigationSlice",
+  name: 'navigationSlice',
   initialState,
   reducers: {
     isLoading: (state, action) => {

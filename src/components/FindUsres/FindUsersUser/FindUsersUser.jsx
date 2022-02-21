@@ -2,7 +2,7 @@ import classes from './FindUsersUser.module.css'
 import img from '../../../img/default-user.png'
 import {NavLink} from "react-router-dom";
 
-function Find_User__User(props) {
+function FindUsersUser(props) {
 
     return (
         <div className={classes.user}>
@@ -32,4 +32,4 @@ function Find_User__User(props) {
     )
 }
 
-export default Find_User__User
+export default FindUsersUser

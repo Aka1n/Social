@@ -22,14 +22,9 @@
   ],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-param-reassign": ["error", { "ignorePropertyModificationsFor": ["state"]}],
     "prettier/prettier" : "off",
-    "quotes" : "off",
     "consistent-return": "off",
-    "react/react-in-jsx-scope": "off",
-    "no-shadow" : "off",
-    "indent" : "off",
-    "no-multiple-empty-lines" : "off",
-    "comma-dangle": "off",
-    "no-param-reassign" : "off"
+    "react/react-in-jsx-scope": "off"
   }
 }

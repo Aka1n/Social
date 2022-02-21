@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { authApi, profileApi, securityApi } from "../api/api";
+import { createSlice } from '@reduxjs/toolkit';
+import { authApi, profileApi, securityApi } from '../api/api';
 
 const initialState = {
   user: {
@@ -10,12 +10,12 @@ const initialState = {
   },
   isAuth: false,
   isLoading: true,
-  errors: "",
-  captchaUrl: "",
+  errors: '',
+  captchaUrl: '',
 };
 
 const authSlice = createSlice({
-  name: "AuthSlice",
+  name: 'AuthSlice',
   initialState,
   reducers: {
     setUserData: (state, action) => {
@@ -40,26 +40,26 @@ const authSlice = createSlice({
 });
 
 const {
- setUserData, setImg, setCaptchaUrl, setErrors, setIsAuth, setLoading
+  setUserData, setImg, setCaptchaUrl, setErrors, setIsAuth, setLoading,
 } = authSlice.actions;
 
 export const getLogin = (id) => (dispatch) => {
   dispatch(setLoading(true));
   authApi
-      .getAuthMe()
-      .then((data) => {
-        if (data.resultCode === 0) {
-          dispatch(setUserData(data.data));
-          dispatch(setIsAuth(true));
-        }
-      })
-      .then(() => profileApi.getProfile(id).then((data) => {
-        dispatch(setImg(data.photos.small));
-        dispatch(setLoading(false));
-      }))
-      .catch(() => {
-        dispatch(setLoading(false));
-      });
+    .getAuthMe()
+    .then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(setUserData(data.data));
+        dispatch(setIsAuth(true));
+      }
+    })
+    .then(() => profileApi.getProfile(id).then((data) => {
+      dispatch(setImg(data.photos.small));
+      dispatch(setLoading(false));
+    }))
+    .catch(() => {
+      dispatch(setLoading(false));
+    });
 };
 
 export const setSignIn = (loginData) => (dispatch) => {
@@ -95,12 +95,11 @@ export const setLogOut = () => (dispatch) => {
   authApi.getLogOut().then((data) => {
     if (data.resultCode === 0) {
       dispatch(setIsAuth(false));
-      dispatch(setErrors(""));
-      dispatch(setCaptchaUrl(""));
+      dispatch(setErrors(''));
+      dispatch(setCaptchaUrl(''));
       dispatch(setLoading(false));
     }
   });
 };
-
 
 export default authSlice.reducer;

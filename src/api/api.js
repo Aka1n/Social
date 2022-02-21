@@ -1,18 +1,21 @@
-import * as axios from "axios";
+import * as axios from 'axios';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: "https://social-network.samuraijs.com/api/1.0/",
+  baseURL: 'https://social-network.samuraijs.com/api/1.0/',
   headers: {
-    "API-KEY": "07c7c199-262b-4468-8fc2-3e55944f3d66",
+    'API-KEY': '07c7c199-262b-4468-8fc2-3e55944f3d66',
   },
 });
 
 export const usersApi = {
-  getUsers(pageNumber) {
+  getUsers(pageNumber, searchUsers) {
     return instance
-      .get(`users?count=12&page=${pageNumber}`)
-      .then((resolve) => resolve.data);
+      .get(`users?count=12&page=${pageNumber}&term=${searchUsers}`)
+      .then((resolve) => {
+        console.log(resolve)
+        return resolve.data
+      });
   },
 };
 
@@ -29,13 +32,13 @@ export const followApi = {
 
 export const authApi = {
   getAuthMe() {
-    return instance.get("auth/me").then((resolve) => resolve.data);
+    return instance.get('auth/me').then((resolve) => resolve.data);
   },
   getSignIn({
-  email, password, rememberMe, captcha
+    email, password, rememberMe, captcha,
   }) {
     return instance
-      .post("auth/login", {
+      .post('auth/login', {
         email,
         password,
         rememberMe,
@@ -44,7 +47,7 @@ export const authApi = {
       .then((resolve) => resolve.data);
   },
   getLogOut() {
-    return instance.delete("auth/login").then((resolve) => resolve.data);
+    return instance.delete('auth/login').then((resolve) => resolve.data);
   },
 };
 
@@ -59,7 +62,7 @@ export const profileApi = {
   },
   setStatus(status) {
     return instance
-      .put("/profile/status/", {
+      .put('/profile/status/', {
         status,
       })
       .then((resolve) => resolve.data);
@@ -69,7 +72,7 @@ export const profileApi = {
 export const securityApi = {
   getCaptcha() {
     return instance
-      .get("/security/get-captcha-url")
+      .get('/security/get-captcha-url')
       .then((resolve) => resolve.data);
   },
 };

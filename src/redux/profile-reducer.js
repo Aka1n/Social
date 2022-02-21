@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { authApi, profileApi } from "../api/api";
+import { createSlice } from '@reduxjs/toolkit';
+import { authApi, profileApi } from '../api/api';
 
 const initialState = {
   posts: [],
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const profileSlice = createSlice({
-  name: "profileSlice",
+  name: 'profileSlice',
   initialState,
   reducers: {
     addPost: (state) => {
@@ -35,22 +35,21 @@ const profileSlice = createSlice({
     },
     addLike: (state, action) => {
       state.posts = state.posts.map((p) => (!p.liked && p.id === action.payload)
-          ? {
-            ...p,
-            liked: true,
-            likes: p.likes + 1,
-          }
-          : p
-      );
+        ? {
+          ...p,
+          liked: true,
+          likes: p.likes + 1,
+        }
+        : p);
     },
     removeLike: (state, action) => {
-      state.posts = state.posts.map((p) => p.liked && p.id === action.payload
-          ? {
-              ...p,
-              liked: false,
-            likes: p.likes - 1,
-          }
-          : p,);
+      state.posts = state.posts.map((p) => (p.liked && p.id === action.payload)
+        ? {
+          ...p,
+          liked: false,
+          likes: p.likes - 1,
+        }
+        : p);
     },
     setUserProfile: (state, action) => {
       state.profile = action.payload;
@@ -81,8 +80,8 @@ export const myProfile = (match) => (dispatch) => {
       let userId = '';
       if (!match) userId = data.data.id;
       else userId = match.params.userId;
-      profileApi.getProfile(userId).then((data) => {
-        dispatch(setUserProfile(data));
+      profileApi.getProfile(userId).then((userData) => {
+        dispatch(setUserProfile(userData));
         dispatch(isLoading(false));
       });
     }
@@ -90,12 +89,12 @@ export const myProfile = (match) => (dispatch) => {
 };
 
 export const setStatus = (status) => (dispatch) => profileApi.setStatus(status).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(addStatus(status));
-    }
-  });
+  if (data.resultCode === 0) {
+    dispatch(addStatus(status));
+  }
+});
 export const getStatus = (id) => (dispatch) => profileApi.getStatus(id).then((data) => {
-    dispatch(addStatus(data));
-  });
+  dispatch(addStatus(data));
+});
 
 export default profileSlice.reducer;

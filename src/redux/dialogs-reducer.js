@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   dialogs: [
-    { id: 1, name: "Erik" },
-    { id: 2, name: "Art" },
-    { id: 3, name: "Kostiya" },
-    { id: 4, name: "Dim" },
+    { id: 1, name: 'Erik' },
+    { id: 2, name: 'Art' },
+    { id: 3, name: 'Kostiya' },
+    { id: 4, name: 'Dim' },
   ],
   messages: [],
-  newMessageText: "",
+  newMessageText: '',
 };
 
 const dialogsSlice = createSlice({
-  name: "dialogsSlice",
+  name: 'dialogsSlice',
   initialState,
   reducers: {
     addNewMessage: (state) => {
@@ -26,7 +26,7 @@ const dialogsSlice = createSlice({
 
       obj.message = state.newMessageText;
       state.messages.push(obj);
-      state.newMessageText = "";
+      state.newMessageText = '';
     },
     addNewMessageText: (state, action) => {
       state.newMessageText = action.payload;
