@@ -5,8 +5,7 @@ function NavigationSideBar(props) {
     return (
         <div className={classes.body}>
             <div className={classes.item}>
-                <NavLink to='/profile' onClick={() => (props.profileId.userId !== props.id) ? props.myProfile(props.id) : ''}
-                         className={i => i.isActive ? classes.active : classes.profile}>Profile</NavLink>
+                <NavLink to='/profile' className={i => i.isActive ? classes.active : classes.profile}>Profile</NavLink>
             </div>
             <div className={classes.item}>
                 <NavLink to='/dialogs' className={i => i.isActive ? classes.active : classes.messages}>Messages</NavLink>

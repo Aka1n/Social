@@ -77,7 +77,7 @@ const Login = () => {
         return <Loading/>
     }
 
-    if (state.isAuth) {
+    if (state.isAuth && !state.isLoading) {
         return <Navigate to='/profile'/>
     }
 

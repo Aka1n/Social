@@ -41,8 +41,8 @@ const findUsersSlice = createSlice({
         ? [...state.userFollowLoading, id]
         : state.userFollowLoading.filter((userId) => userId !== id);
     },
-    setSearchUsers : (state, action) => {
-      state.searchUsers = action.payload
+    setSearchUsers: (state, action) => {
+      state.searchUsers = action.payload;
     },
   },
 });
@@ -58,48 +58,41 @@ export const {
   setSearchUsers,
 } = findUsersSlice.actions;
 
-export const getUsers = (users, pageNumber, searchUsers) => (dispatch) => {
+export const getUsers = (users, pageNumber, searchUsers) => async (dispatch) => {
   dispatch(isLoading(true));
-    let userData = ''
-    usersApi.getUsers(pageNumber, searchUsers)
-      .then((data) => {
-        userData = data
-        dispatch(setUsers(userData.items));
-      })
-      .then(() => dispatch(setTotalPages(Math.ceil(userData.totalCount / 12))))
-      .then(() => dispatch(isLoading(false)))
+  const data = await usersApi.getUsers(pageNumber, searchUsers);
+  await dispatch(setUsers(data.items));
+  await dispatch(setTotalPages(Math.ceil(data.totalCount / 12)));
+  await dispatch(isLoading(false));
 };
-export const getFollowThunk = (userId) => (dispatch) => {
-  dispatch(isFollowLoading({ loading: true, id: userId }));
-  followApi
-    .getFollow(userId)
-    .then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(follow(userId));
-      }
-    })
-    .finally(() => dispatch(isFollowLoading({ loading: false, id: userId })));
+export const getFollowThunk = (userId) => async (dispatch) => {
+  try {
+    dispatch(isFollowLoading({ loading: true, id: userId }));
+    const data = await followApi.getFollow(userId);
+    if (data.resultCode === 0) {
+      dispatch(follow(userId));
+    }
+  } finally {
+    dispatch(isFollowLoading({ loading: false, id: userId }));
+  }
 };
-export const getUnFollowThunk = (userId) => (dispatch) => {
-  dispatch(isFollowLoading({ loading: true, id: userId }));
-  followApi
-    .getUnFollow(userId)
-    .then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(unFollow(userId));
-      }
-    })
-    .finally(() => dispatch(isFollowLoading({ loading: false, id: userId })));
+export const getUnFollowThunk = (userId) => async (dispatch) => {
+  try {
+    dispatch(isFollowLoading({ loading: true, id: userId }));
+    const data = await followApi.getUnFollow(userId);
+    if (data.resultCode === 0) {
+      dispatch(unFollow(userId));
+    }
+  } finally {
+    dispatch(isFollowLoading({ loading: false, id: userId }));
+  }
 };
-export const setPage = (page, searchUsers) => (dispatch) => {
+export const setPage = (page, searchUsers) => async (dispatch) => {
   dispatch(isLoading(true));
   dispatch(setPageNumber(page));
-  usersApi
-    .getUsers(page, searchUsers)
-    .then((data) => dispatch(setUsers(data.items)))
-    .then(() => dispatch(isLoading(false)));
+  const data = await usersApi.getUsers(page, searchUsers);
+  await dispatch(setUsers(data.items));
+  await dispatch(isLoading(false));
 };
-
-
 
 export default findUsersSlice.reducer;

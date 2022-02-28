@@ -39,9 +39,44 @@
     align-items: center;
 }
 .login {
+    position: relative;
     padding-right: 10px;
     color: white;
+    cursor: pointer;
 }
+.login_menu {
+    transition: 300ms;
+    z-index: 99;
+    position: absolute;
+    bottom: -35px;
+    right: 10px;
+    color: #000000;
+    width: 150px;
+    border: solid 1px slategray;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.35);
+    box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.35);
+}
+
+.login_menu li {
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+.login_menu li:hover {
+    background-color: rgba(220,220,220,0.5);
+}
+.login_menu:before {
+    position: absolute;
+    content: '';
+    top: -20px;
+    right: 10px;
+    border: 10px solid transparent; border-bottom: 10px solid #ffffff;
+}
+
 .avatar {
     width: 30px;
     height: 30px;
@@ -52,4 +87,37 @@
 .body_login {
     display: flex;
     align-items: center;
+}
+.icon {
+    margin-right: 10px;
+}
+.hide {
+    z-index: 98;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.active {
+    height: 39px;
+}
+.item {}
+.side_menu {}
+.MyClass {
+    transition: 300ms;
+    top: 0;
+    height: 0;
+    opacity: 0;
+}
+.MyClassEnterActive {
+    top: 0;
+    height: 100%;
+    opacity: 1;
+}
+.MyClassEnterDone {
+    opacity: 1;
+}
+.MyClassExit {
+    opacity: 0;
 }

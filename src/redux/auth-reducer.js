@@ -43,63 +43,83 @@ const {
   setUserData, setImg, setCaptchaUrl, setErrors, setIsAuth, setLoading,
 } = authSlice.actions;
 
-export const getLogin = (id) => (dispatch) => {
+export const getLogin = (id) => async (dispatch) => {
   dispatch(setLoading(true));
-  authApi
-    .getAuthMe()
-    .then((data) => {
-      if (data.resultCode === 0) {
-        dispatch(setUserData(data.data));
-        dispatch(setIsAuth(true));
-      }
-    })
-    .then(() => profileApi.getProfile(id).then((data) => {
-      dispatch(setImg(data.photos.small));
-      dispatch(setLoading(false));
-    }))
-    .catch(() => {
-      dispatch(setLoading(false));
-    });
-};
-
-export const setSignIn = (loginData) => (dispatch) => {
-  dispatch(setLoading(true));
-  authApi
-    .getSignIn(loginData)
-    .then((data) => {
-      if (data.resultCode === 10) {
-        return securityApi.getCaptcha().then((captcha) => {
-          if (!captcha.resultCode) {
-            dispatch(setCaptchaUrl(captcha.url));
-            dispatch(setErrors(data.messages.toString()));
-            dispatch(setLoading(false));
-          }
-        });
-      }
-
-      if (data.resultCode === 0) {
-        dispatch(getLogin(data.data.userId));
-        dispatch(setLoading(false));
-      } else {
-        dispatch(setLoading(false));
-        dispatch(setErrors(data.messages.toString()));
-      }
-    })
-    .catch(() => {
-      dispatch(setLoading(false));
-    });
-};
-
-export const setLogOut = () => (dispatch) => {
-  dispatch(setLoading(true));
-  authApi.getLogOut().then((data) => {
+  try {
+    const data = await authApi.getAuthMe();
     if (data.resultCode === 0) {
-      dispatch(setIsAuth(false));
-      dispatch(setErrors(''));
-      dispatch(setCaptchaUrl(''));
-      dispatch(setLoading(false));
+      dispatch(setUserData(data.data));
+      dispatch(setIsAuth(true));
     }
-  });
+    const profileData = await profileApi.getProfile(id);
+    dispatch(setImg(profileData.photos.small));
+    dispatch(setLoading(false));
+  } catch (e) {
+    dispatch(setLoading(false));
+  }
+};
+
+// export const setSignIn = (loginData) => (dispatch) => {
+//   dispatch(setLoading(true));
+//   authApi
+//     .getSignIn(loginData)
+//     .then((data) => {
+//       if (data.resultCode === 10) {
+//         return securityApi.getCaptcha().then((captcha) => {
+//           if (!captcha.resultCode) {
+//             dispatch(setCaptchaUrl(captcha.url));
+//             dispatch(setErrors(data.messages.toString()));
+//             dispatch(setLoading(false));
+//           }
+//         });
+//       }
+//
+//       if (data.resultCode === 0) {
+//         dispatch(getLogin(data.data.userId));
+//         dispatch(setLoading(false));
+//       } else {
+//         dispatch(setLoading(false));
+//         dispatch(setErrors(data.messages.toString()));
+//       }
+//     })
+//     .catch(() => {
+//       dispatch(setLoading(false));
+//     });
+// };
+
+export const setSignIn = (loginData) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const data = await authApi.getSignIn(loginData);
+    if (data.resultCode === 10) {
+      const captcha = await securityApi.getCaptcha();
+      if (!captcha.resultCode) {
+        dispatch(setCaptchaUrl(captcha.url));
+        dispatch(setErrors(data.messages.toString()));
+        dispatch(setLoading(false));
+      }
+    }
+    if (data.resultCode === 0) {
+      await dispatch(getLogin(data.data.userId));
+      dispatch(setLoading(false));
+    } else {
+      dispatch(setLoading(false));
+      dispatch(setErrors(data.messages.toString()));
+    }
+  } catch (e) {
+    dispatch(setLoading(false));
+  }
+};
+
+export const setLogOut = () => async (dispatch) => {
+  dispatch(setLoading(true));
+  const data = await authApi.getLogOut();
+  if (data.resultCode === 0) {
+    dispatch(setIsAuth(false));
+    dispatch(setErrors(''));
+    dispatch(setCaptchaUrl(''));
+    dispatch(setLoading(false));
+  }
 };
 
 export default authSlice.reducer;

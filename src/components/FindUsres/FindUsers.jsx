@@ -58,8 +58,8 @@ const FindUsers = () => {
                         pageNumber >= 3 ? pageNumber - 2 :
                             pageNumber === 2 ? pageNumber - 1 :
                                 pageNumber === 1? pageNumber : null; totalPages >= i; i++) {
-            mass.push(<div onClick={() => dispatch(setPage(i, searchUsers))}
-                           className={pageNumber === i ? `${classes.page} ${classes.active}` : classes.page}>{i}</div>)
+            mass.push( <div onClick={() => dispatch(setPage(i, searchUsers))}
+                            className={pageNumber === i ? `${classes.page} ${classes.active}` : classes.page}>{i}</div>)
             if (mass.length >= 5) {
                 return mass.filter(page => page.props.children > 0)
             }
@@ -80,7 +80,8 @@ const FindUsers = () => {
     return (
         <div className={classes.findusers}>
             <div className={classes.title}>Users</div>
-            <input className={classes.search} onChange={debounce((e) => dispatch(setSearchUsers(e.target.value)),500)}
+            <input className={classes.search}
+                   onChange={debounce((e) => dispatch(setSearchUsers(e.target.value)),500)}
                    placeholder="&#xf002;   Search..."/>
             <div className={classes.row}>
                 {!isLoading ? <div className={classes.body}>{<AddUsers users={users}/>}</div> : <Loading/> }
@@ -89,9 +90,10 @@ const FindUsers = () => {
                                                                onClick={() => dispatch(setPage(1, searchUsers))}
                                                                icon={faCaretLeft}/> : null}
                     {addPagination(totalPages)}
-                    {pageNumber < totalPages - 2 && totalPages >= 5 ? <FontAwesomeIcon className={classes.arrow}
-                                                                                  onClick={() => dispatch(setPage(totalPages, searchUsers))}
-                                                                                  icon={faCaretRight}/> : null}
+                    {pageNumber < totalPages - 2 && totalPages >= 5
+                        ? <FontAwesomeIcon className={classes.arrow}
+                                           onClick={() => dispatch(setPage(totalPages, searchUsers))}
+                                           icon={faCaretRight}/> : null}
                 </div>
             </div>
         </div>

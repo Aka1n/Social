@@ -34,22 +34,22 @@ const profileSlice = createSlice({
       state.newPostChange = action.payload;
     },
     addLike: (state, action) => {
-      state.posts = state.posts.map((p) => (!p.liked && p.id === action.payload)
+      state.posts = state.posts.map((p) => ((!p.liked && p.id === action.payload)
         ? {
           ...p,
           liked: true,
           likes: p.likes + 1,
         }
-        : p);
+        : p));
     },
     removeLike: (state, action) => {
-      state.posts = state.posts.map((p) => (p.liked && p.id === action.payload)
+      state.posts = state.posts.map((p) => ((p.liked && p.id === action.payload)
         ? {
           ...p,
           liked: false,
           likes: p.likes - 1,
         }
-        : p);
+        : p));
     },
     setUserProfile: (state, action) => {
       state.profile = action.payload;
