@@ -7,7 +7,7 @@ import {
 import * as React from "react";
 import FindUsersUser from "./FindUsersUser/FindUsersUser";
 import classes from "./FindUsers.module.css";
-import {useEffect, useMemo} from "react";
+import {useEffect, useMemo, useState} from "react";
 import Loading from "../../common/Loading/Loading";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretLeft, faCaretRight} from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +21,8 @@ const FindUsers = () => {
     const dispatch = useDispatch()
 
     const {users ,totalPages, pageNumber, isLoading, userFollowLoading, searchUsers} = findUsersPage
+
+    const [text, setText] = useState(searchUsers)
 
 
     useMemo(() => {
@@ -45,7 +47,7 @@ const FindUsers = () => {
                                          follow={id => dispatch(getFollowThunk(id))}
                                          unFollow={id => dispatch(getUnFollowThunk(id))}
                                          userFollowLoading={userFollowLoading}/>)
-    },[])
+    },[searchUsers])
 
     const addPagination = (totalPages) => {
 
@@ -68,21 +70,24 @@ const FindUsers = () => {
     }
 
 
-    const debounce = (func, ms) => {
+    const debounceOnChange = (func, ms) => useMemo(() => {
         let timeoutID
-        return function () {
-            const f = () => func.apply(this, arguments)
+        return function (...args) {
+            setText(args[0].target.value)
             clearTimeout(timeoutID)
+            const f = () => func.apply(this, args)
             timeoutID = setTimeout(f, ms)
         }
-    }
+    },[])
+
 
     return (
         <div className={classes.findusers}>
             <div className={classes.title}>Users</div>
             <input className={classes.search}
-                   onChange={debounce((e) => dispatch(setSearchUsers(e.target.value)),500)}
-                   placeholder="&#xf002;   Search..."/>
+                   onChange={debounceOnChange((e) => dispatch(setSearchUsers(e.target.value)),500)}
+                   value={text}
+                placeholder="&#xf002;   Search..."/>
             <div className={classes.row}>
                 {!isLoading ? <div className={classes.body}>{<AddUsers users={users}/>}</div> : <Loading/> }
                 <div className={classes.pages}>
