@@ -4,9 +4,16 @@ import { authApi, profileApi } from '../api/api';
 const initialState = {
   posts: [],
   newPostChange: '',
-  profile: null,
+  profile: {
+    photos : {},
+    contacts: {}
+  },
   isLoading: false,
   status: '',
+  errors: {
+    img: null,
+    contacts: null
+  }
 };
 
 const profileSlice = createSlice({
@@ -60,6 +67,15 @@ const profileSlice = createSlice({
     addStatus: (state, action) => {
       state.status = action.payload;
     },
+    addPhoto: (state, action) => {
+      state.profile.photos = action.payload
+    },
+    addInfo: (state, action) => {
+      state.profile = {...state.profile, ...action.payload}
+    },
+    addImgErrors: (state, action) => {
+      state.errors.img = action.payload
+    }
   },
 });
 
@@ -71,30 +87,68 @@ export const {
   addLike,
   addNewPostText,
   addPost,
+  addPhoto,
+  addInfo,
+  addImgErrors,
 } = profileSlice.actions;
 
-export const myProfile = (match) => (dispatch) => {
-  dispatch(isLoading(true));
-  authApi.getAuthMe().then((data) => {
+export const myProfile = (match) => async (dispatch) => {
+  try {
+    dispatch(isLoading(true))
+    const data = await authApi.getAuthMe()
     if (data.resultCode === 0) {
       let userId = '';
+
       if (!match) userId = data.data.id;
       else userId = match.params.userId;
-      profileApi.getProfile(userId).then((userData) => {
-        dispatch(setUserProfile(userData));
-        dispatch(isLoading(false));
-      });
+
+      const userData = await profileApi.getProfile(userId)
+      dispatch(setUserProfile(userData));
     }
-  });
+    dispatch(isLoading(false));
+  } catch (e) {}
+}
+
+export const setStatus = (status) => async (dispatch) => {
+  try {
+    const data = await profileApi.setStatus(status);
+    if (data.resultCode === 0) {
+      dispatch(addStatus(status));
+    }
+  } catch (e) {}
 };
 
-export const setStatus = (status) => (dispatch) => profileApi.setStatus(status).then((data) => {
-  if (data.resultCode === 0) {
-    dispatch(addStatus(status));
-  }
-});
-export const getStatus = (id) => (dispatch) => profileApi.getStatus(id).then((data) => {
+export const getStatus = (id) => async (dispatch) => {
+  const data = await profileApi.getStatus(id);
   dispatch(addStatus(data));
-});
+}
+
+export const setPhoto = (photo) => async (dispatch) => {
+  try {
+    const data = await profileApi.setPhoto(photo);
+    console.log(data)
+    if (data.resultCode === 0) {
+      dispatch(addPhoto(data.data.photos));
+    }
+    if (data.resultCode === 1) {
+      dispatch(addImgErrors(data.messages.toString()))
+    }
+  }catch (e) {}
+};
+
+export const setInfo = (info) => async (dispatch) => {
+  try {
+    dispatch(isLoading(true))
+    const data = await profileApi.setInfo(info)
+    if (data.resultCode === 0) {
+      dispatch(addInfo(data))
+      dispatch(isLoading(false))
+    }
+    if (data.resultCode === 1) {
+      console.log(data)
+      dispatch(isLoading(false))
+    }
+  } catch (e) {}
+}
 
 export default profileSlice.reducer;

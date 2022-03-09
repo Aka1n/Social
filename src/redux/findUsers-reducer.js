@@ -15,13 +15,10 @@ const findUsersSlice = createSlice({
   name: 'findUsersSlice',
   initialState,
   reducers: {
-    follow: (state, action) => {
-      state.users = state.users.map((u) => (u.id === action.payload
-        ? { ...u, followed: true } : u));
-    },
-    unFollow: (state, action) => {
-      state.users = state.users.map((u) => (u.id === action.payload
-        ? { ...u, followed: false } : u));
+    followUnFollow: (state, action) => {
+      const {userId, follow} = action.payload
+      state.users = state.users.map((u) => (u.id === userId
+          ? { ...u, followed: !follow} : u));
     },
     setUsers: (state, action) => {
       state.users = action.payload;
@@ -49,13 +46,13 @@ const findUsersSlice = createSlice({
 
 export const {
   follow,
-  unFollow,
   setUsers,
   setTotalPages,
   setPageNumber,
   isLoading,
   isFollowLoading,
   setSearchUsers,
+  followUnFollow,
 } = findUsersSlice.actions;
 
 export const getUsers = (users, pageNumber, searchUsers) => async (dispatch) => {
@@ -65,28 +62,20 @@ export const getUsers = (users, pageNumber, searchUsers) => async (dispatch) => 
   await dispatch(setTotalPages(Math.ceil(data.totalCount / 12)));
   await dispatch(isLoading(false));
 };
-export const getFollowThunk = (userId) => async (dispatch) => {
+export const getFollowThunk = (userId, follow) => async (dispatch) => {
   try {
     dispatch(isFollowLoading({ loading: true, id: userId }));
-    const data = await followApi.getFollow(userId);
+    let data
+    if (!follow) data = await followApi.getFollow(userId);
+    else data = await followApi.getUnFollow(userId);
     if (data.resultCode === 0) {
-      dispatch(follow(userId));
+      dispatch(followUnFollow({userId : userId, follow : follow}));
     }
   } finally {
     dispatch(isFollowLoading({ loading: false, id: userId }));
   }
 };
-export const getUnFollowThunk = (userId) => async (dispatch) => {
-  try {
-    dispatch(isFollowLoading({ loading: true, id: userId }));
-    const data = await followApi.getUnFollow(userId);
-    if (data.resultCode === 0) {
-      dispatch(unFollow(userId));
-    }
-  } finally {
-    dispatch(isFollowLoading({ loading: false, id: userId }));
-  }
-};
+
 export const setPage = (page, searchUsers) => async (dispatch) => {
   dispatch(isLoading(true));
   dispatch(setPageNumber(page));

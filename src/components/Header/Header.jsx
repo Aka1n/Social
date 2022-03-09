@@ -3,8 +3,8 @@ import logo from '../../logo.svg';
 import classes from './Header.module.css';
 import defaultAva from '../../img/default-user.png';
 import {useDispatch, useSelector} from "react-redux";
-import {getLogin, setLogOut} from "../../redux/auth-reducer";
-import {useEffect, useState} from "react";
+import {setLogOut} from "../../redux/auth-reducer";
+import {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 import {CSSTransition} from "react-transition-group"
@@ -13,14 +13,11 @@ function Header() {
 
     const auth = useSelector(state => state.auth)
     const {user, isAuth} = auth
+    const img = useSelector(state => state.profilePage.profile.photos.small)
 
     const dispatch = useDispatch()
 
     const [editMode, setMode] = useState(false)
-
-    useEffect(() => {
-        dispatch(getLogin(user.id))
-    },[])
 
     return (
         <div className={classes.back}>
@@ -36,7 +33,7 @@ function Header() {
                 <div className={classes.body_login}>
                     <img
                         className={classes.avatar}
-                        src={user.img ? user.img : defaultAva}
+                        src={img ? img : defaultAva}
                         alt=""
                     />
                     {

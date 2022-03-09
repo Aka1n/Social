@@ -9,14 +9,16 @@ function FindUsersUser(props) {
             <div className={classes.body}>
                 <div className={classes.addfriend}>
                     <NavLink to={`/profile/${props.id}`}>
-                        <img className={classes.avatar} src={(props.photos.small === null) ? img : props.photos.small } alt=""/>
+                        <img className={classes.avatar}
+                             src={(props.photos.small === null) ? img : props.photos.small } alt=""/>
                     </NavLink>
-                    {(props.followed) ? <button disabled={props.userFollowLoading.some(userId => userId === props.id)}
-                                                onClick={() => {props.unFollow(props.id)}}
+                    {(props.followed)
+                        ? <button disabled={props.userFollowLoading.some(userId => userId === props.id)}
+                                                onClick={() => {props.followUnFollow(props.id, props.followed)}}
                                                 className={classes.button}>Un-follow</button>
                         : <button disabled={props.userFollowLoading.some(userId => userId === props.id)}
                                   onClick={() => {
-                                      props.follow(props.id)}
+                                      props.followUnFollow(props.id, props.followed)}
                                   }
                                   className={classes.button}>Follow</button>  }
                 </div>

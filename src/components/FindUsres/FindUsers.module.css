@@ -72,7 +72,7 @@
     border: solid 1px slategray;
     padding: 10px;
     margin-bottom: 10px;
-    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+    font-family: "Open Sans", Verdana, FontAwesome, sans-serif;
     font-style: normal;
     font-weight: normal;
     text-decoration: inherit;

@@ -1,8 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {
     getFollowThunk,
-    getUnFollowThunk,
-    setPage, getUsers, setSearchUsers, setPageNumber
+    setPage, getUsers, setSearchUsers, setPageNumber,
 } from "../../redux/findUsers-reducer";
 import * as React from "react";
 import FindUsersUser from "./FindUsersUser/FindUsersUser";
@@ -44,9 +43,8 @@ const FindUsers = () => {
                                          name={user.name}
                                          status={user.status}
                                          photos={user.photos}
-                                         follow={id => dispatch(getFollowThunk(id))}
-                                         unFollow={id => dispatch(getUnFollowThunk(id))}
-                                         userFollowLoading={userFollowLoading}/>)
+                                         userFollowLoading={userFollowLoading}
+                                         followUnFollow={(id, follow) => dispatch(getFollowThunk(id, follow))}/>)
     },[searchUsers])
 
     const addPagination = (totalPages) => {

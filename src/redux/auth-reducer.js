@@ -59,34 +59,6 @@ export const getLogin = (id) => async (dispatch) => {
   }
 };
 
-// export const setSignIn = (loginData) => (dispatch) => {
-//   dispatch(setLoading(true));
-//   authApi
-//     .getSignIn(loginData)
-//     .then((data) => {
-//       if (data.resultCode === 10) {
-//         return securityApi.getCaptcha().then((captcha) => {
-//           if (!captcha.resultCode) {
-//             dispatch(setCaptchaUrl(captcha.url));
-//             dispatch(setErrors(data.messages.toString()));
-//             dispatch(setLoading(false));
-//           }
-//         });
-//       }
-//
-//       if (data.resultCode === 0) {
-//         dispatch(getLogin(data.data.userId));
-//         dispatch(setLoading(false));
-//       } else {
-//         dispatch(setLoading(false));
-//         dispatch(setErrors(data.messages.toString()));
-//       }
-//     })
-//     .catch(() => {
-//       dispatch(setLoading(false));
-//     });
-// };
-
 export const setSignIn = (loginData) => async (dispatch) => {
   dispatch(setLoading(true));
   try {

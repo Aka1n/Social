@@ -1,0 +1,108 @@
+.settings label {
+    display: flex;
+    flex-direction: column;
+}
+.settings input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.settings {
+    width: 100%;
+}
+.body {
+    padding: 10px;
+    background-color: lightgray;
+}
+.name {
+    width: 100%;
+}
+.avatar_name {
+    display: flex;
+}
+.avatar {
+    width: 200px;
+    margin-right: 10px;
+}
+.p:hover:after {
+    opacity: 1;
+}
+.p:hover:before {
+    opacity: 1;
+}
+.p:before {
+    transition: 300ms;
+    z-index: 10;
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    opacity: 0;
+}
+.p:after {
+    z-index: 11;
+    position: absolute;
+    transition: 300ms;
+    content: "\f030";
+    font-family: "Font Awesome 5 Free";
+    opacity: 0;
+    font-weight: bold;
+    font-size: 35px;
+    color: white;
+    top: 50%;
+    left: 50%;
+    margin-left: -17.5px;
+    margin-top: -17.5px;
+}
+.avatar_hidden {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+.p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 300ms;
+    position: relative;
+    display: flex;
+    padding-bottom: 100%;
+    background-color: #ffffff;
+}
+.button {
+    cursor: pointer;
+    transition: 300ms;
+    max-width: 200px;
+    background-color: darkblue;
+    color: white;
+}
+.button:hover {
+    background-color: deepskyblue;
+}
+.job {
+    width: initial !important;
+    margin-right: 10px;
+}
+.label_job {
+    display: flex;
+    align-items: center;
+
+}
+.contacts input {
+    font-family: "Open Sans", Verdana, FontAwesome , sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+}
+.photoError {
+    padding: 10px;
+    color: white;
+    background: darkred;
+    margin-bottom: 10px;
+}
+.errorBorder {
+    z-index: 22;
+    outline: 3px solid darkred;
+}

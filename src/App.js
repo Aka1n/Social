@@ -1,17 +1,38 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React from 'react';
+import {BrowserRouter, Route, Routes, useMatch} from 'react-router-dom';
+import React, {Suspense, useEffect, useState} from 'react';
 import Profile from './components/Profile/Profile';
 import Navigation from './components/Navigation/Navigation';
 import Login from './components/Login/Login';
-import FindUsers from './components/FindUsres/FindUsers';
+const FindUsers = React.lazy(() => import('./components/FindUsres/FindUsers'));
 import AuthRedirect from './components/AuthRedirect';
 import Dialogs from './components/Dialogs/Dialogs';
 import Header from './components/Header/Header';
 import InitiationRedirect from './components/InitiationRedirect';
+import Loading from "./common/Loading/Loading";
+import Settings from "./components/Settings/Settings";
+import {myProfile} from "./redux/profile-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {getLogin} from "./redux/auth-reducer";
 
 function App() {
-  return (
+
+  const id = useSelector(state => state.auth.user.id)
+
+  const [loading, setLoading] = useState(true)
+
+  const dispatch = useDispatch()
+
+  useEffect(async () => {
+    await setLoading(true)
+    await dispatch(myProfile())
+    await dispatch(getLogin(id))
+    await setLoading(false)
+   },[])
+
+
+  if (loading) return <Loading/>
+  else return (
     <BrowserRouter>
       <div className="wrapper">
         <Header />
@@ -46,12 +67,25 @@ function App() {
             <Route
               path="/findusers/*"
               element={(
-                <AuthRedirect>
-                  <FindUsers />
-                </AuthRedirect>
+                  <Suspense fallback={<Loading/>}>
+                    <AuthRedirect>
+                      <FindUsers />
+                     </AuthRedirect>
+                  </Suspense>
               )}
             />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={
+                <Suspense fallback={<Loading/>}>
+                    <Login />
+                </Suspense>
+            }/>
+            <Route path="/settings" element={
+                <Suspense fallback={<Loading/>}>
+                    <AuthRedirect>
+                        <Settings/>
+                    </AuthRedirect>
+                </Suspense>
+            }/>
           </Routes>
         </div>
       </div>

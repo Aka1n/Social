@@ -66,6 +66,20 @@ export const profileApi = {
       });
     return resolve.data;
   },
+  async setPhoto(image) {
+    const formData = new FormData()
+    formData.append("image", image)
+    const resolve = await instance.put('/profile/photo', formData, {
+      headers : {
+        "Content-Type": "multipart/form-data"
+      }
+    })
+    return resolve.data
+  },
+  async setInfo(info) {
+    const resolve = await instance.put('/profile', info)
+    return resolve.data
+  }
 };
 
 export const securityApi = {
