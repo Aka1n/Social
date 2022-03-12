@@ -30,8 +30,9 @@ const Settings = () => {
 
     const {img, contacts} = apiErrors
 
-    const {fullName, lookingForAJob, lookingForAJobDescription, aboutMe, github,
-        vk, facebook, instagram, twitter, youtube } = profile
+    const {fullName, lookingForAJob, lookingForAJobDescription, aboutMe} = profile
+
+    const {github, vk, facebook, instagram, twitter, youtube} = profile.contacts
 
     const [radio, setRadio] = useState(lookingForAJob)
     const [imgLoading, setImgLoading] = useState(false)
@@ -49,6 +50,57 @@ const Settings = () => {
             })
         }
     },[img])
+
+    useMemo(() => {
+
+        const error = 'Invalid url format'
+
+        const facebookInvalid = `${error} (Contacts->Facebook)`
+        const vkInvalid = `${error} (Contacts->Vk)`
+        const twitterInvalid = `${error} (Contacts->Twitter)`
+        const instagramInvalid = `${error} (Contacts->Instagram)`
+        const youtubeInvalid = `${error} (Contacts->Youtube)`
+        const githubInvalid = `${error} (Contacts->Github)`
+
+        if (contacts !== null) {
+            contacts.forEach(el => {
+                if (el === githubInvalid) {
+                    setError("github", {
+                        type: "manual",
+                        message: error
+                    })
+                } else if (el === vkInvalid) {
+                    setError("vk", {
+                        type: "manual",
+                        message: error
+                    })
+                } else if (el === facebookInvalid) {
+                    setError("facebook", {
+                        type: "manual",
+                        message: error
+                    })
+                } else if (el === instagramInvalid) {
+                    setError("instagram", {
+                        type: "manual",
+                        message: error
+                    })
+                } else if (el === twitterInvalid) {
+                    setError("twitter", {
+                        type: "manual",
+                        message: error
+                    })
+                    return el
+                } else if (el === youtubeInvalid) {
+                    setError("youtube", {
+                        type: "manual",
+                        message: error
+                    })
+                } else {
+                    return el
+                }
+            })
+        }
+    },[contacts])
 
 
     const onSubmit = (data) => {
@@ -86,7 +138,12 @@ const Settings = () => {
         resetObj.lookingForAJobDescription = lookingForAJobDescription.length !== 0
             ? lookingForAJobDescription
             : profile.lookingForAJobDescription
-
+        resetObj.github = github
+        resetObj.vk = vk
+        resetObj.facebook = facebook
+        resetObj.instagram = instagram
+        resetObj.twitter = twitter
+        resetObj.youtube = youtube
         reset(resetObj)
     }
 
@@ -160,33 +217,45 @@ const Settings = () => {
                     <div className={classes.contacts}>
                         <label>
                             Contacts
-                            <input className={classes.github}
+                            <input className={errors?.github ? `${classes.github} ${classes.errorBorder}` : classes.github}
                                    type="text"
                                    placeholder="&#xf09b;   Github"
                                    autoComplete={false}
                                    {...register("github", {value: github})}/>
-                            <input className={classes.vk}
+                                   {errors?.github && <div className={classes.errorColor}>{errors.github.message}</div>}
+                            <input className={errors?.vk ? `${classes.vk} ${classes.errorBorder}` : classes.vk}
                                    type="text" placeholder="&#xf189;   VK"
                                    autoComplete={false}
                                    {...register("vk", {value: vk})}/>
-                            <input className={classes.facebook}
+                                   {errors?.vk && <div className={classes.errorColor}>{errors.vk.message}</div>}
+                            <input className={errors?.facebook ? `${classes.facebook} ${classes.errorBorder}` : classes.facebook}
                                    type="text"
                                    placeholder="&#xf09a;   Facebook"
                                    autoComplete={false}
                                    {...register("facebook", {value: facebook})}/>
-                            <input className={classes.instagram}
+                                   {errors?.facebook && <div className={classes.errorColor}>{errors.facebook.message}</div>}
+                            <input className={
+                                        errors?.instagram
+                                        ? `${classes.instagram} ${classes.errorBorder}` : classes.instagram}
                                    type="text"
                                    placeholder="&#xf16d;   Instagram"
                                    autoComplete={false}
                                    {...register("instagram", {value: instagram})}/>
-                            <input className={classes.twitter}
+                                   {errors?.instagram && <div className={classes.errorColor}>{errors.instagram.message}</div>}
+                            <input className={
+                                        errors?.twitter
+                                        ? `${classes.twitter} ${classes.errorBorder}` : classes.twitter}
                                    type="text" placeholder="&#xf099;   Twitter"
                                    autoComplete={false}
                                    {...register("twitter", {value: twitter})}/>
-                            <input className={classes.youtube}
+                                   {errors?.twitter && <div className={classes.errorColor}>{errors.twitter.message}</div>}
+                            <input className={
+                                        errors?.youtube
+                                        ? `${classes.youtube} ${classes.errorBorder}` : classes.youtube}
                                    type="text" placeholder="&#xf167;   Youtube"
                                    autoComplete={false}
                                    {...register("youtube", {value: youtube})}/>
+                                   {errors?.youtube && <div className={classes.errorColor}>{errors.youtube.message}</div>}
                         </label>
                     </div>
                     <input className={classes.button} value="Save" type="submit"/>

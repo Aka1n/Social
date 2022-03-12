@@ -75,6 +75,9 @@ const profileSlice = createSlice({
     },
     addImgErrors: (state, action) => {
       state.errors.img = action.payload
+    },
+    addInfoErrors: (state, action) => {
+      state.errors.contacts = action.payload
     }
   },
 });
@@ -90,6 +93,7 @@ export const {
   addPhoto,
   addInfo,
   addImgErrors,
+  addInfoErrors,
 } = profileSlice.actions;
 
 export const myProfile = (match) => async (dispatch) => {
@@ -146,6 +150,7 @@ export const setInfo = (info) => async (dispatch) => {
     }
     if (data.resultCode === 1) {
       console.log(data)
+      dispatch(addInfoErrors(data.messages))
       dispatch(isLoading(false))
     }
   } catch (e) {}
