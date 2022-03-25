@@ -67,18 +67,6 @@ const profileSlice = createSlice({
     addStatus: (state, action) => {
       state.status = action.payload;
     },
-    addPhoto: (state, action) => {
-      state.profile.photos = action.payload
-    },
-    addInfo: (state, action) => {
-      state.profile = {...state.profile, ...action.payload}
-    },
-    addImgErrors: (state, action) => {
-      state.errors.img = action.payload
-    },
-    addInfoErrors: (state, action) => {
-      state.errors.contacts = action.payload
-    }
   },
 });
 
@@ -90,10 +78,6 @@ export const {
   addLike,
   addNewPostText,
   addPost,
-  addPhoto,
-  addInfo,
-  addImgErrors,
-  addInfoErrors,
 } = profileSlice.actions;
 
 export const myProfile = (match) => async (dispatch) => {
@@ -127,33 +111,5 @@ export const getStatus = (id) => async (dispatch) => {
   dispatch(addStatus(data));
 }
 
-export const setPhoto = (photo) => async (dispatch) => {
-  try {
-    const data = await profileApi.setPhoto(photo);
-    console.log(data)
-    if (data.resultCode === 0) {
-      dispatch(addPhoto(data.data.photos));
-    }
-    if (data.resultCode === 1) {
-      dispatch(addImgErrors(data.messages.toString()))
-    }
-  }catch (e) {}
-};
-
-export const setInfo = (info) => async (dispatch) => {
-  try {
-    dispatch(isLoading(true))
-    const data = await profileApi.setInfo(info)
-    if (data.resultCode === 0) {
-      dispatch(addInfo(data))
-      dispatch(isLoading(false))
-    }
-    if (data.resultCode === 1) {
-      console.log(data)
-      dispatch(addInfoErrors(data.messages))
-      dispatch(isLoading(false))
-    }
-  } catch (e) {}
-}
 
 export default profileSlice.reducer;

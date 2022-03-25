@@ -121,3 +121,12 @@
 .MyClassExit {
     opacity: 0;
 }
+.burger {
+    display: none;
+}
+
+@media screen and (max-width: 726px) {
+    .burger {
+        display: block;
+    }
+}

@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter, Route, Routes, useMatch} from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import React, {Suspense, useEffect, useState} from 'react';
 import Profile from './components/Profile/Profile';
 import Navigation from './components/Navigation/Navigation';
@@ -25,15 +25,15 @@ function App() {
 
   useEffect(async () => {
     await setLoading(true)
-    await dispatch(myProfile())
     await dispatch(getLogin(id))
+    await dispatch(myProfile())
     await setLoading(false)
-   },[])
+   },[id])
 
 
   if (loading) return <Loading/>
   else return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <div className="wrapper">
         <Header />
         <div className="main">

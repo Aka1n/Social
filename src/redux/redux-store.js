@@ -4,6 +4,7 @@ import dialogsReducer from './dialogs-reducer';
 import navigationReducer from './navigation-reducer';
 import findUsersReducer from './findUsers-reducer';
 import authReducer from './auth-reducer';
+import settingsReducer from './settings-reducer'
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     navigation: navigationReducer,
     findUsersPage: findUsersReducer,
     auth: authReducer,
+    settings: settingsReducer,
   },
 });
 

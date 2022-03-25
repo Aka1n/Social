@@ -88,3 +88,35 @@ export const securityApi = {
     return resolve.data;
   },
 };
+
+export const dialogApi = {
+  async getDialogs() {
+    const resolve = await instance.get('/dialogs');
+    return resolve.data;
+  },
+  async getMessages(userId) {
+    const resolve = await instance.get(`/dialogs/${userId}/messages`)
+    return resolve.data
+  },
+  async setNewMessage(userId, message) {
+    const resolve = await instance.post(`/dialogs/${userId}/messages`, {
+      body : message
+    })
+    return resolve.data
+  },
+  async setDialog(userId) {
+    const resolve = await instance.put(`/dialogs/${userId}`, {userId})
+    return resolve.data
+  }
+};
+
+
+
+
+
+
+
+
+
+
+

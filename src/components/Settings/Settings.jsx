@@ -2,9 +2,9 @@ import {useForm} from "react-hook-form";
 import classes from "./Settings.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useMemo, useState} from "react";
-import {setInfo, setPhoto} from "../../redux/profile-reducer";
 import Loading from "../../common/Loading/Loading";
 import Photo from "./Photo";
+import {getMyProfile, setMyInfo, setMyPhoto} from "../../redux/settings-reducer";
 
 
 const Settings = () => {
@@ -24,9 +24,10 @@ const Settings = () => {
     const dispatch = useDispatch()
 
     const id = useSelector(state => state.auth.user.id)
-    const isLoading = useSelector(state => state.profilePage.isLoading)
-    const profile = useSelector(state => state.profilePage.profile)
-    const apiErrors = useSelector(state => state.profilePage.errors)
+    const loading = useSelector(state => state.settings.isLoading)
+    const profile = useSelector(state => state.settings.profile)
+    const apiErrors = useSelector(state => state.settings.myErrors)
+
 
     const {img, contacts} = apiErrors
 
@@ -42,6 +43,8 @@ const Settings = () => {
         size: 'Image should be less then 10MB'
     }
 
+    useEffect(() => dispatch(getMyProfile(id)),[])
+
     useEffect(() => {
         if (img === submitErrors.extendion || img === submitErrors.size) {
             setError("image", {
@@ -50,6 +53,7 @@ const Settings = () => {
             })
         }
     },[img])
+
 
     useMemo(() => {
 
@@ -130,7 +134,7 @@ const Settings = () => {
             }
         }
 
-        dispatch(setInfo(obj))
+        dispatch(setMyInfo(obj, id))
 
         const resetObj = {}
         resetObj.fullName = fullName.length !== 0 ? fullName : profile.fullName
@@ -144,6 +148,7 @@ const Settings = () => {
         resetObj.instagram = instagram
         resetObj.twitter = twitter
         resetObj.youtube = youtube
+
         reset(resetObj)
     }
 
@@ -155,12 +160,13 @@ const Settings = () => {
             })
         }
         await setImgLoading(true)
-        await dispatch(setPhoto(photo.image[0]))
+        await dispatch(setMyPhoto(photo.image[0]))
         await setImgLoading(false)
     }
 
-    if (isLoading) return <Loading/>
-    else return (
+    if (loading) return <Loading/>
+
+    return (
         <div className={classes.settings}>
             <h1 className={classes.title}>Settings</h1>
             <div className={classes.body}>

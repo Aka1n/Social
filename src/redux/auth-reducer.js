@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { authApi, profileApi, securityApi } from '../api/api';
+import {setMyProfile} from "./settings-reducer";
 
 const initialState = {
   user: {
@@ -9,7 +10,7 @@ const initialState = {
     img: null,
   },
   isAuth: false,
-  isLoading: true,
+  isLoading: false,
   errors: '',
   captchaUrl: '',
 };
@@ -39,7 +40,7 @@ const authSlice = createSlice({
   },
 });
 
-const {
+export const {
   setUserData, setImg, setCaptchaUrl, setErrors, setIsAuth, setLoading,
 } = authSlice.actions;
 
@@ -53,6 +54,7 @@ export const getLogin = (id) => async (dispatch) => {
     }
     const profileData = await profileApi.getProfile(id);
     dispatch(setImg(profileData.photos.small));
+    dispatch(setMyProfile(profileData))
     dispatch(setLoading(false));
   } catch (e) {
     dispatch(setLoading(false));
@@ -88,6 +90,7 @@ export const setLogOut = () => async (dispatch) => {
   const data = await authApi.getLogOut();
   if (data.resultCode === 0) {
     dispatch(setIsAuth(false));
+    dispatch(setUserData({}))
     dispatch(setErrors(''));
     dispatch(setCaptchaUrl(''));
     dispatch(setLoading(false));

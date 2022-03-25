@@ -6,13 +6,13 @@ function DialogsTextArea(props) {
         let text = element.target.value
         props.addNewMessageText(text)
     }
-    let addMessage = () => props.addNewMessage()
 
     return (
         <div className={classes.textarea}>
             <textarea onChange={addMessageText}
                       value={props.newMessageText}></textarea>
-            <button className={classes.button} onClick={addMessage}>Send</button>
+            <button className={classes.button}
+                    onClick={() => props.addNewMessage(props.userId, props.newMessageText)}>Send</button>
         </div>
     )
 }

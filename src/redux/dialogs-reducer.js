@@ -1,39 +1,87 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {dialogApi} from "../api/api";
 
 const initialState = {
-  dialogs: [
-    { id: 1, name: 'Erik' },
-    { id: 2, name: 'Art' },
-    { id: 3, name: 'Kostiya' },
-    { id: 4, name: 'Dim' },
-  ],
+  dialogs: [],
   messages: [],
   newMessageText: '',
+  isLoading: true,
+  userId: '',
 };
 
 const dialogsSlice = createSlice({
   name: 'dialogsSlice',
   initialState,
   reducers: {
-    addNewMessage: (state) => {
-      const obj = {};
-
-      if (state.messages.length === 0) {
-        obj.id = 1;
-      } else obj.id = state.messages[state.messages.length - 1].id + 1;
-
-      if (state.newMessageText.length === 0) return;
-
-      obj.message = state.newMessageText;
-      state.messages.push(obj);
-      state.newMessageText = '';
-    },
     addNewMessageText: (state, action) => {
       state.newMessageText = action.payload;
     },
+    getAllDialogs: (state, action) => {
+      state.dialogs = action.payload
+    },
+    isLoading: (state, action) => {
+      state.isLoading = state.payload
+    },
+    setMessages: (state, action) => {
+      state.messages = action.payload
+    },
+    addNewMessage: (state, action) => {
+      if (state.newMessageText.length === 0) return
+      else state.messages = [...state.messages, action.payload]
+      state.newMessageText = ''
+    },
+    setUserId: (state, action) => {
+      state.userId = action.payload
+    }
   },
+
 });
 
-export const { addNewMessageText, addNewMessage } = dialogsSlice.actions;
+export const { addNewMessageText, addNewMessage, getAllDialogs, isLoading, setMessages, setUserId } = dialogsSlice.actions;
+
+export const getDialogs = () => async (dispatch) => {
+  try {
+    dispatch(isLoading(true))
+    const data = await dialogApi.getDialogs()
+    let mass = []
+    let dataFilter = data.filter(el => {
+      let boolean = mass.some(num => num === el.id)
+      if (!boolean) {
+        mass.push(el.id)
+        return el
+      }
+    })
+
+    dispatch(getAllDialogs(dataFilter))
+    dispatch(isLoading(false))
+  }
+  catch (e) {}
+}
+
+export const getMessages = (userId) => async (dispatch) => {
+  try {
+    const data = await dialogApi.getMessages(userId)
+    dispatch(setMessages(data.items))
+  }
+  catch (e) {}
+}
+
+export const setMessage = (userId, message) => async (dispatch) => {
+  try {
+    const data = await dialogApi.setNewMessage(userId, message)
+    console.log(data)
+    dispatch(addNewMessage(data.data.message))
+  }
+  catch (e) {}
+}
+
+export const addDialog = (userId) => async (dispatch) => {
+  try {
+    const data = await dialogApi.setDialog(userId)
+    console.log(data)
+  }
+  catch (e) {}
+}
+
 
 export default dialogsSlice.reducer;

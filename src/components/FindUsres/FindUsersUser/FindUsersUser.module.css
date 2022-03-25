@@ -12,7 +12,6 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    margin-bottom: 10px;
     object-fit: cover;
 }
 .button {
@@ -21,6 +20,7 @@
     width: 60px;
     color: white;
     transition: 300ms;
+    margin-top: 5px;
 }
 .button:hover {
     background-color: deepskyblue;
