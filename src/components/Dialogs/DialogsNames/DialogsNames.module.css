@@ -1,19 +1,23 @@
-.names {
+.dialogs {
     position: relative;
-    min-width: 130px;
+    min-width: 169px;
     margin-right: 10px;
 }
 .body {
     position: fixed;
+    height: calc(100% - 70px)
+}
+.names {
+    position: absolute;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
     height: 100%;
 }
-.body::-webkit-scrollbar {
-    width: 0;
-}
+
 .name {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
     padding: 10px;
     color: DarkSlateGrey;
@@ -26,4 +30,13 @@
 .active {
     background-color: darkblue;
     color: white;
+}
+
+.names::-webkit-scrollbar {
+    width: 0;
+}
+.avatar {
+    border-radius: 50%;
+    width: 30px;
+    margin-right: 10px;
 }

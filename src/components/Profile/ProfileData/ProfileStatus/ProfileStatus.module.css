@@ -1,8 +1,11 @@
 .status {
+    width: 100%;
     margin-bottom: 25px;
     font-weight: normal;
 }
 .input {
+    width: 100%;
+    max-width: 200px;
     display: flex;
     background-color: rgba(220,220,220,0.5);
     border: solid 1px slategray;
@@ -31,4 +34,10 @@
 }
 :hover:after {
     opacity: 0.5;
+}
+
+@media screen and (max-width: 726px) {
+    .input {
+        max-width: 150px;
+    }
 }

@@ -12,6 +12,10 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^17.0.14",
     "@types/react-transition-group": "^4.4.4",
     "axios": "^0.24.0",
     "i": "^0.3.7",
@@ -25,6 +29,7 @@
     "react-transition-group": "^4.4.2",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
+    "typescript": "^4.6.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -33,7 +38,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "validate": "eslint -c .eslintrc.json ./src",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

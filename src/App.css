@@ -23,6 +23,9 @@ body {
     font-family: Candara;
     overflow-x: hidden;
 }
+#root {
+    height: 100%;
+}
 .wrapper {
     position: relative;
     display: flex;
@@ -35,9 +38,7 @@ body {
 .main {
     display: flex;
     flex: 1 1 auto;
-}
-#root {
-    height: 100%;
+    padding-right: 10px;
 }
 
 

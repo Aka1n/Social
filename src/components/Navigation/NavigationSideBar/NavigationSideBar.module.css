@@ -9,11 +9,12 @@
 }
 .item a {
     display: block;
+    white-space: nowrap;
     transition: 300ms;
     cursor: pointer;
     padding: 10px;
 }
-.item a:visited {
+.item a:visited, :link {
     color: white;
 }
 .active {

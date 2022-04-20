@@ -1,20 +1,42 @@
 .navigation {
+    transition: 300ms;
     display: block;
     position: fixed;
-    min-width: 200px;
+    width: 200px;
     background-color: darkblue;
     color: aliceblue;
     font-size: 18px;
     height: 100%;
+    z-index: 9999;
 }
 
 .back {
-    display: block;
     min-width: 200px;
-    margin-right: 10px;
+    z-index: 8888;
 }
 
 .hidden {
     display: none;
 }
+
+@media screen and (max-width: 726px) {
+    .back {
+        min-width: 0;
+    }
+    .navigation {
+        transition: 300ms;
+        width: 0px;
+        overflow: hidden;
+    }
+    .active {
+        width: 200px;
+    }
+    .back_active {
+        position: fixed;
+        min-width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+    }
+}
+
 

@@ -121,12 +121,55 @@
 .MyClassExit {
     opacity: 0;
 }
-.burger {
-    display: none;
-}
 
 @media screen and (max-width: 726px) {
     .burger {
-        display: block;
+        cursor: pointer;
+        transition: 300ms;
+        position: relative;
+        display: flex;
+        min-width: 30px;
+        height: 20px;
+        margin-right: 10px;
+        margin-left: 10px;
+        align-items: center;
+    }
+    .burger > span {
+        transition: 300ms;
+        width: 100%;
+        height: 3px;
+        background: white;
+    }
+    .burger:before {
+        transition: 300ms;
+        position: absolute;
+        content: '';
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 3px;
+        background-color: white;
+    }
+    .burger:after {
+        transition: 300ms;
+        position: absolute;
+        content: '';
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 3px;
+        opacity: 1;
+        background-color: white;
+    }
+    .burger_active:after {
+        transform: rotate(45deg);
+        bottom: 8px;
+    }
+    .burger_active > span {
+        opacity: 0;
+    }
+    .burger_active:before {
+        transform: rotate(-45deg);
+        top: 9px;
     }
 }
