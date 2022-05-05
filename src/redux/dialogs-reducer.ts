@@ -1,14 +1,14 @@
 import {
   Action,
-  createAsyncThunk,
-  createSlice, Dispatch, ThunkAction,
+  createSlice, ThunkAction,
 
 } from '@reduxjs/toolkit';
 import { dialogApi } from '../api/api';
-import {DialogType, MessageType} from "../types/types";
+import {DialogType, MessageType, commonDialog} from "../types/types";
 import {RootState} from "./redux-store";
 
 const initialState = {
+  commonDialog: [] as commonDialog[] | [],
   dialogs: [] as Array<DialogType> | [],
   messages: [] as Array<MessageType> | [],
   newMessageText: '' as string | '',
@@ -41,12 +41,16 @@ const dialogsSlice = createSlice({
     setUserId: (state, action) => {
       state.userId = action.payload;
     },
+    setCommonDialog: (state, action) => {
+      if (action.payload.length <= 1) state.commonDialog = [...state.commonDialog, ...action.payload]
+      else state.commonDialog = action.payload
+    }
   },
 });
 
 export const {
   addNewMessageText, addNewMessage, getAllDialogs,
-  isLoading, setMessages, setUserId,
+  isLoading, setMessages, setUserId, setCommonDialog
 } = dialogsSlice.actions;
 
 

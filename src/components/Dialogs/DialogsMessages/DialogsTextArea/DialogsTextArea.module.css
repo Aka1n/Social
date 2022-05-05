@@ -27,3 +27,6 @@
 .button:hover {
     background-color: deepskyblue;
 }
+.button:disabled {
+    opacity: 0.5;
+}

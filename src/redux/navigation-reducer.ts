@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {Action, createSlice, ThunkAction} from '@reduxjs/toolkit';
 import { setUserProfile } from './profile-reducer';
 import { profileApi } from '../api/api';
 import {FriendType} from "../types/types";
+import {RootState} from "./redux-store";
 
 
 const initialState = {
@@ -25,7 +26,8 @@ const navigationSlice = createSlice({
 
 export const { isLoading, setActive } = navigationSlice.actions;
 
-export const myProfile = (userId: number) => async (dispatch: any) => {
+export const myProfile = (userId: number):
+    ThunkAction<Promise<void>, RootState, unknown, Action>=> async (dispatch) => {
   try {
     dispatch(isLoading(true));
     const data = await profileApi.getProfile(userId)

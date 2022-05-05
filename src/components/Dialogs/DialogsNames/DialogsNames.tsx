@@ -45,6 +45,11 @@ const DialogsNames: FC<Props> = ({names, getMessages, setUserId, getDialogs}) =>
         <div className={classes.dialogs}>
             <div className={classes.body}>
                 <div className={classes.names}>
+                    <NavLink className={e => e.isActive
+                        ? `${classes.name} ${classes.active}`
+                        : classes.name} to={'/dialogs/common'}>
+                        <img className={classes.avatar} src={defaultImg} alt=""/>
+                        Common dialog</NavLink>
                     <Names names={names}/>
                 </div>
             </div>

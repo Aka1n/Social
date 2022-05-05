@@ -1,40 +1,58 @@
-import {createSlice, Dispatch} from '@reduxjs/toolkit';
+import {Action, createSlice, Dispatch, PayloadAction, ThunkAction} from '@reduxjs/toolkit';
 import { authApi, profileApi, securityApi } from '../api/api';
 import { setMyProfile } from './settings-reducer';
+import {RootState} from "./redux-store";
 
-const initialState = {
+type initialState = {
   user: {
-    id: 0 as number,
-    login: null as string | null,
-    email: null as string | null,
-    img: null as string | null,
+    id: number,
+    login: string | null,
+    email: string | null,
+    img?: string | null,
   },
-  isAuth: false as boolean | true,
-  isLoading: false as boolean,
-  authErrors: '' as string,
-  captchaUrl: '' as string,
+  isAuth: boolean,
+  isLoading: boolean,
+  authErrors: string,
+  captchaUrl: string,
+}
+
+const initialState: initialState = {
+  user: {
+    id: 0,
+    login: null,
+    email: null,
+    img: null,
+  },
+  isAuth: false,
+  isLoading: false,
+  authErrors: '',
+  captchaUrl: '',
 };
 
 const authSlice = createSlice({
   name: 'AuthSlice',
   initialState,
   reducers: {
-    setUserData: (state, action) => {
+    setUserData: (state, action: PayloadAction<{
+      id: number | 0,
+      login: string | null,
+      email: string | null,
+      img?: string | null,}>) => {
       state.user = action.payload;
     },
-    setLoading: (state, action) => {
+    setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setImg: (state, action) => {
+    setImg: (state, action: PayloadAction<string>) => {
       state.user.img = action.payload;
     },
-    setErrors: (state, action) => {
+    setErrors: (state, action: PayloadAction<string>) => {
       state.authErrors = action.payload;
     },
-    setIsAuth: (state, action) => {
+    setIsAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload;
     },
-    setCaptchaUrl: (state, action) => {
+    setCaptchaUrl: (state, action: PayloadAction<string>) => {
       state.captchaUrl = action.payload;
     },
   },
@@ -44,7 +62,8 @@ export const {
   setUserData, setImg, setCaptchaUrl, setErrors, setIsAuth, setLoading,
 } = authSlice.actions;
 
-export const getLogin = (id: number) => async (dispatch: Dispatch<any>) => {
+export const getLogin = (id: number):
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const data = await authApi.getAuthMe();
@@ -65,8 +84,8 @@ export const setSignIn = (loginData: {
   email: string,
   password: string,
   rememberMe: boolean,
-  captcha: string,
-}) => async (dispatch: Dispatch<any>) => {
+  captcha: string | null,
+}): ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const data = await authApi.getSignIn(loginData);
@@ -90,13 +109,14 @@ export const setSignIn = (loginData: {
   }
 };
 
-export const setLogOut = () => async (dispatch: Dispatch<any>) => {
+export const setLogOut = ():
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   dispatch(setLoading(true));
   const data = await authApi.getLogOut();
   if (data.resultCode === 0) {
     dispatch(setIsAuth(false));
     dispatch(setUserData({
-      id: null,
+      id: 0,
       login: null,
       email: null,
       img: null,

@@ -2,7 +2,7 @@ import classes from './Dialogs.module.css'
 import DialogsNames from "./DialogsNames/DialogsNames";
 import DialogsMessages from "./DialogsMessages/DialogsMessages";
 import {useDispatch, useSelector} from "react-redux";
-import {addNewMessageText, getMessages, setMessage, setUserId} from "../../redux/dialogs-reducer";
+import {addNewMessageText, getMessages, setMessage, setUserId, setCommonDialog} from "../../redux/dialogs-reducer";
 import {useMatch} from "react-router-dom";
 import {AppDispatch, RootState} from '../../redux/redux-store'
 import {getDialogs} from "../../redux/dialogs-reducer";
@@ -12,7 +12,7 @@ const Dialogs: FC = () =>  {
 
     const match = useMatch("/dialogs/:userId")
     const dialogsPage = useSelector((state: RootState) => state.dialogsPage)
-    const {dialogs, userId, isLoading, messages, newMessageText} = dialogsPage
+    const {dialogs, userId, isLoading, messages, newMessageText, commonDialog} = dialogsPage
     const id = useSelector((state: RootState) => state.auth.user.id)
     const dispatch: AppDispatch = useDispatch()
 
@@ -34,6 +34,8 @@ const Dialogs: FC = () =>  {
                                  loading={isLoading}
                                  getMessages={(userId: number) => dispatch(getMessages(userId))}
                                  match={match ? match.params.userId : null}
+                                 setCommonDialog={(dialogs: any) => dispatch(setCommonDialog(dialogs))}
+                                 commonDialog={commonDialog}
                 />
             </div>
         </div>

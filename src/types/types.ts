@@ -91,3 +91,10 @@ export enum ResultCode {
     Reject = 1,
     Captcha = 10
 }
+
+export type commonDialog = {
+    userId: number
+    userName: string
+    message: string
+    photo: string | null
+}

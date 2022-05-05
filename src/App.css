@@ -22,6 +22,7 @@ body {
     height: 100%;
     font-family: Candara;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 #root {
     height: 100%;
@@ -39,6 +40,11 @@ body {
     display: flex;
     flex: 1 1 auto;
     padding-right: 10px;
+}
+
+.body {
+    height: 100%;
+    overflow-y: auto;
 }
 
 

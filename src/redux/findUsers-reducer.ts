@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {Action, createSlice, ThunkAction} from '@reduxjs/toolkit';
 import { followApi, usersApi } from '../api/api';
 import {UserType} from "../types/types";
+import {RootState} from "./redux-store";
 
 
 const initialState = {
@@ -56,14 +57,16 @@ export const {
   followUnFollow,
 } = findUsersSlice.actions;
 
-export const getUsers = (users: number, pageNumber: number, searchUsers: string) => async (dispatch: any) => {
+export const getUsers = (users: number, pageNumber: number, searchUsers: string):
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   dispatch(isLoading(true));
   const data = await usersApi.getUsers(pageNumber, searchUsers);
   await dispatch(setUsers(data.items));
   await dispatch(setTotalPages(Math.ceil(data.totalCount / 12)));
   await dispatch(isLoading(false));
 };
-export const getFollowThunk = (userId: number, follow: boolean) => async (dispatch: any) => {
+export const getFollowThunk = (userId: number, follow: boolean):
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   try {
     dispatch(isFollowLoading({ loading: true, id: userId }));
     let data;
@@ -77,7 +80,8 @@ export const getFollowThunk = (userId: number, follow: boolean) => async (dispat
   }
 };
 
-export const setPage = (page: number, searchUsers: string) => async (dispatch: any) => {
+export const setPage = (page: number, searchUsers: string):
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   dispatch(isLoading(true));
   dispatch(setPageNumber(page));
   const data = await usersApi.getUsers(page, searchUsers);

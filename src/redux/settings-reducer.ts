@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {Action, createSlice, ThunkAction} from '@reduxjs/toolkit';
 import { profileApi } from '../api/api';
 import {MyErrorsType, ProfileType} from "../types/types";
+import {RootState} from "./redux-store";
 
 const initialState = {
   profile: {
@@ -45,7 +46,8 @@ export const {
   setMyProfile, addMyInfo, addMyImgErrors, addMyInfoErrors, addMyPhoto, setLoading,
 } = settingsSlice.actions;
 
-export const getMyProfile = (id: number) => async (dispatch: any) => {
+export const getMyProfile = (id: number):
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const data = await profileApi.getProfile(id);
@@ -54,7 +56,8 @@ export const getMyProfile = (id: number) => async (dispatch: any) => {
   } catch (e) {}
 };
 
-export const setMyPhoto = (photo: File) => async (dispatch: any) => {
+export const setMyPhoto = (photo: File):
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   try {
     const data = await profileApi.setPhoto(photo);
     if (data.resultCode === 0) {
@@ -66,7 +69,8 @@ export const setMyPhoto = (photo: File) => async (dispatch: any) => {
   } catch (e) {}
 };
 
-export const setMyInfo = (info: object, id: number) => async (dispatch: any) => {
+export const setMyInfo = (info: object, id: number):
+    ThunkAction<Promise<void>, RootState, unknown, Action> => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const data = await profileApi.setInfo(info);
