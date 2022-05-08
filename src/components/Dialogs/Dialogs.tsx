@@ -6,7 +6,7 @@ import {addNewMessageText, getMessages, setMessage, setUserId, setCommonDialog} 
 import {useMatch} from "react-router-dom";
 import {AppDispatch, RootState} from '../../redux/redux-store'
 import {getDialogs} from "../../redux/dialogs-reducer";
-import {FC} from "react";
+import {FC, useEffect, useState} from "react";
 
 const Dialogs: FC = () =>  {
 
@@ -16,14 +16,26 @@ const Dialogs: FC = () =>  {
     const id = useSelector((state: RootState) => state.auth.user.id)
     const dispatch: AppDispatch = useDispatch()
 
+    const [device, setDevice] = useState<string>('PC')
+
+    useEffect(() => {
+        if (window.innerWidth <= 726) {
+            setDevice('Mobile')
+        }
+    },[])
+
     return (
         <div className={classes.dialogs}>
-            <div className={classes.title}></div>
+            <div className={classes.title}/>
             <div className={classes.body}>
                 <DialogsNames names={dialogs}
                               getMessages={(userId: number) => dispatch(getMessages(userId))}
                               setUserId={(userId: number) => dispatch(setUserId(userId))}
                               getDialogs={() => dispatch(getDialogs())}
+                              match={match}
+                              device={device}
+
+
                 />
                 <DialogsMessages messages={messages}
                                  newMessageText={newMessageText}
@@ -36,6 +48,8 @@ const Dialogs: FC = () =>  {
                                  match={match ? match.params.userId : null}
                                  setCommonDialog={(dialogs: any) => dispatch(setCommonDialog(dialogs))}
                                  commonDialog={commonDialog}
+                                 device={device}
+                                 names={dialogs}
                 />
             </div>
         </div>

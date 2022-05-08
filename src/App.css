@@ -12,7 +12,7 @@ a {
 }
 textarea {
     resize: none;
-    height: 0px;
+    height: 0;
 }
 html {
     height: 100%;
@@ -20,7 +20,7 @@ html {
 }
 body {
     height: 100%;
-    font-family: Candara;
+    font-family: 'Candara', serif;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -40,6 +40,7 @@ body {
     display: flex;
     flex: 1 1 auto;
     padding-right: 10px;
+    padding-top: 10px;
 }
 
 .body {

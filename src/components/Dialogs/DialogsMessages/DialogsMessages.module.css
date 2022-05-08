@@ -9,6 +9,7 @@
     height: 100%;
 }
 .body {
+    width: 100%;
     height: 100%;
 }
 .message {
@@ -71,6 +72,35 @@
     align-items: center;
     justify-content: center;
 
+}
+
+.dialogInfo {
+    z-index: 99;
+    position: fixed;
+    display: flex;
+}
+.back {
+    margin-right: 10px;
+    background-color: darkblue;
+    padding: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+.name {
+    padding: 10px;
+    background-color: darkblue;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+.avatar {
+    border-radius: 50%;
+    width: 30px;
+    margin-right: 10px;
+}
+.pad {
+    padding-top: 60px;
 }
 
 
