@@ -4,6 +4,7 @@ import {FC, useEffect, useMemo, useState} from "react";
 import Loading from "../../../common/Loading/Loading";
 import {commonDialog, MessageType} from "../../../types/types";
 import {bodyRef} from "../../../App";
+import {useWebSocket} from "react-use-websocket/dist/lib/use-websocket";
 
 
 type Props = {
@@ -32,70 +33,20 @@ const DialogsMessages: FC<Props> = ({userId, addNewMessageText, addNewMessage,
                                         setCommonDialog, commonDialog}) => {
 
     const [common, setCommon] = useState(false)
-    const [webSocket, setWebSocket] = useState<WebSocket | null>(null)
-    const [wsStatus, setWsStatus] = useState<boolean>(false)
+    const [webSocket, setWebSocket] = useState<string>('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+    const {readyState, lastMessage, sendMessage} = useWebSocket(webSocket)
 
     useEffect(() => {
-
-        let ws: WebSocket
-
-        const closeWs = () => setTimeout(createWebSocket, 3000)
-
-        function createWebSocket() {
-            ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-            ws.addEventListener('close', closeWs)
-            setWebSocket(ws)
+        if (lastMessage !== null) {
+            setCommonDialog(JSON.parse(lastMessage.data))
         }
-        createWebSocket()
-
-        return () => {
-            ws.removeEventListener('close', closeWs)
-            ws.close()
-        }
-
-    },[])
-
-    useEffect(() => {
-
-        const addMessage = (e: MessageEvent<any>) => {
-            let message = JSON.parse(e.data)
-            setCommonDialog(message)
-            console.log(JSON.parse(e.data))
-        }
-
-        webSocket?.addEventListener('message', addMessage)
-
-        return () => {
-            webSocket?.removeEventListener('message', addMessage)
-        }
-
-    },[webSocket])
-
-    useEffect(() => {
-
-        const wsOpen = () => {
-            setWsStatus(true)
-            console.log('Прив')
-        }
-
-        const wsClose = () => setWsStatus(false)
-
-        webSocket?.addEventListener('open', wsOpen)
-        webSocket?.addEventListener('close', wsClose)
-
-        return () => {
-            webSocket?.removeEventListener('open', wsOpen)
-            webSocket?.removeEventListener('close', wsClose)
-        }
-
-    },[webSocket])
+    },[lastMessage])
 
     useEffect(() => {
         if (match === "common") {
             bodyRef.current.scrollTo(0, 5000)
         }
     },[common, commonDialog,loading])
-
 
     useEffect(() => {
 
@@ -163,8 +114,9 @@ const DialogsMessages: FC<Props> = ({userId, addNewMessageText, addNewMessage,
                              userId={userId}
                              addNewMessage={addNewMessage}
                              common={common}
-                             ws={webSocket}
-                             wsStatus={wsStatus}
+                             readyState={readyState}
+                             sendMessage={sendMessage}
+
             />
         </div>
 

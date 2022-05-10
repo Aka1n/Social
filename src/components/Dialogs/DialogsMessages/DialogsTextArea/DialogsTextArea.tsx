@@ -1,5 +1,7 @@
 import classes from './DialogsTextArea.module.css'
 import {FC} from "react";
+import {SendMessage} from "react-use-websocket/src/lib/types"
+import {ReadyState} from "react-use-websocket/src/lib/constants";
 
 type Props = {
     newMessageText: string
@@ -7,13 +9,13 @@ type Props = {
     userId: number | string
     addNewMessage: (userId: number, message: string) => void
     common: boolean
-    ws: WebSocket | null
-    wsStatus: boolean
+    sendMessage: SendMessage
+    readyState: ReadyState
 }
 
 
 const DialogsTextArea: FC<Props> = ({newMessageText, addNewMessageText, userId,
-                                        addNewMessage, common, ws, wsStatus}) => {
+                                        addNewMessage, common, sendMessage, readyState}) => {
 
     const addMessageText = (e: any) => {
         addNewMessageText(e.target.value)
@@ -24,9 +26,9 @@ const DialogsTextArea: FC<Props> = ({newMessageText, addNewMessageText, userId,
             <textarea onChange={addMessageText}
                       value={newMessageText}/>
             <button className={classes.button}
-                    disabled={!wsStatus}
+                    disabled={readyState === 0 || readyState === 3}
                     onClick={!common ? () => {addNewMessage(+userId, newMessageText)}
-                        : () => ws?.send(newMessageText)}>Send</button>
+                    : () => sendMessage(newMessageText)}>Send</button>
         </div>
     )
 }

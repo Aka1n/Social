@@ -2,6 +2,7 @@ import {Action, createSlice, ThunkAction} from '@reduxjs/toolkit';
 import { profileApi } from '../api/api';
 import {MyErrorsType, ProfileType} from "../types/types";
 import {RootState} from "./redux-store";
+import {setImg} from "./auth-reducer";
 
 const initialState = {
   profile: {
@@ -62,6 +63,7 @@ export const setMyPhoto = (photo: File):
     const data = await profileApi.setPhoto(photo);
     if (data.resultCode === 0) {
       dispatch(addMyPhoto(data.data.photos));
+      dispatch(setImg(data.data.photos.small))
     }
     if (data.resultCode === 1) {
       dispatch(addMyImgErrors(data.messages.toString()));

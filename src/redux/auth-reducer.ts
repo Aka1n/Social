@@ -1,4 +1,4 @@
-import {Action, createSlice, Dispatch, PayloadAction, ThunkAction} from '@reduxjs/toolkit';
+import {Action, createSlice, PayloadAction, ThunkAction} from '@reduxjs/toolkit';
 import { authApi, profileApi, securityApi } from '../api/api';
 import { setMyProfile } from './settings-reducer';
 import {RootState} from "./redux-store";
@@ -43,7 +43,7 @@ const authSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setImg: (state, action: PayloadAction<string>) => {
+    setImg: (state, action: PayloadAction<string | undefined>) => {
       state.user.img = action.payload;
     },
     setErrors: (state, action: PayloadAction<string>) => {
