@@ -1,9 +1,11 @@
 import classes from './DialogsMessages.module.css'
 import DialogsTextArea from "./DialogsTextArea/DialogsTextArea";
-import {FC, useEffect, useMemo, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import Loading from "../../../common/Loading/Loading";
-import {commonDialog, MessageType} from "../../../types/types";
+import {commonDialog, DialogType, MessageType} from "../../../types/types";
 import {bodyRef} from "../../../App";
+import {NavLink} from "react-router-dom";
+import defaultImg from "../../../img/default-user.png"
 import {useWebSocket} from "react-use-websocket/dist/lib/use-websocket";
 
 
@@ -19,6 +21,8 @@ type Props = {
     newMessageText: string
     setCommonDialog: (dialogs: any) => void
     commonDialog: commonDialog[]
+    device: string
+    names: Array<DialogType>
 
 }
 
@@ -30,11 +34,12 @@ type MessagesType = {
 const DialogsMessages: FC<Props> = ({userId, addNewMessageText, addNewMessage,
                              id, loading, getMessages,
                              match, messages, newMessageText,
-                                        setCommonDialog, commonDialog}) => {
+                                        setCommonDialog, commonDialog, device, names}) => {
 
-    const [common, setCommon] = useState(false)
-    const [webSocket, setWebSocket] = useState<string>('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-    const {readyState, lastMessage, sendMessage} = useWebSocket(webSocket)
+    const [common, setCommon] = useState<boolean>(false)
+    const [webSocket, setWebSocket] = useState('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+
+    const {lastMessage, sendMessage, readyState} = useWebSocket(webSocket)
 
     useEffect(() => {
         if (lastMessage !== null) {
@@ -48,8 +53,8 @@ const DialogsMessages: FC<Props> = ({userId, addNewMessageText, addNewMessage,
         }
     },[common, commonDialog,loading])
 
-    useEffect(() => {
 
+    useEffect(() => {
         if (match === "common") {
             setCommon(true)
         } else if (match) {
@@ -58,21 +63,26 @@ const DialogsMessages: FC<Props> = ({userId, addNewMessageText, addNewMessage,
         }
     },[match])
 
-    const Messages: FC<MessagesType> = ({messages}) => useMemo(
-        () => <>
-            {
-            messages.map(el => <div key={el.id}
-                                    className={el.senderId === id
-                                        ? classes.item
-                                        : `${classes.item} ${classes.second_item}`}>
-                    <div className={el.senderId === id ?
-                        classes.message : classes.second_message}
-                         dangerouslySetInnerHTML={{__html: el.body}}/>
-                </div>
-            )
-        }
-        </>
-    ,[messages])
+
+    const Messages: FC<MessagesType> = ({messages}) => {
+
+        return (
+            <>
+                {
+                    messages.map(el => <div key={el.id}
+                                            className={el.senderId === id
+                                                ? classes.item
+                                                : `${classes.item} ${classes.second_item}`}>
+                            <div className={el.senderId === id ?
+                                classes.message : classes.second_message}
+                                 dangerouslySetInnerHTML={{__html: el.body}}/>
+                        </div>
+                    )
+                }
+            </>
+        )
+    }
+
 
     const CommonMessages: FC<{
         messages: commonDialog[]}> = ({messages}) => {
@@ -93,7 +103,30 @@ const DialogsMessages: FC<Props> = ({userId, addNewMessageText, addNewMessage,
         )
     }
 
-    if (!match) {
+    const Name: FC<{match: string | number, names: Array<DialogType>}>
+        = ({match, names}) => {
+
+            let user: DialogType[] | [] = names
+
+            user = user.filter(el => el.id === +match)
+
+            return (
+                <div className={classes.dialogInfo}>
+                    <NavLink className={classes.back} to={'/dialogs'}>Back</NavLink>
+                    <div className={classes.name}>
+                        <img className={classes.avatar}
+                             src={user[0]?.photos.small ? user[0].photos.small : defaultImg} alt=""/>
+                        <div>{user[0]?.userName}</div>
+                    </div>
+                </div>
+                )
+        }
+
+    if (!match && device === 'Mobile') {
+        return (<></>)
+    }
+
+    if (!match && device === 'PC') {
         return (
             <div className={classes.select_dialog}>
                 <div>
@@ -106,16 +139,20 @@ const DialogsMessages: FC<Props> = ({userId, addNewMessageText, addNewMessage,
     return (
         <div className={classes.messages}>
             <div className={classes.body}>
-                {loading ? <Loading/> : common ? <CommonMessages messages={commonDialog}/>
-                : <Messages messages={messages}/>}
+                {match && device === 'Mobile' ? <Name match={match} names={names}/> : null}
+                {loading ? <Loading/> : common ? <div className={match && device === 'Mobile' ? classes.pad : ''}>
+                        <CommonMessages messages={commonDialog}/></div>
+                : <div className={match && device === 'Mobile' ? classes.pad : ''}>
+                        <Messages messages={messages}/>
+                </div>}
             </div>
             <DialogsTextArea newMessageText={newMessageText}
                              addNewMessageText={addNewMessageText}
                              userId={userId}
                              addNewMessage={addNewMessage}
                              common={common}
-                             readyState={readyState}
                              sendMessage={sendMessage}
+                             readyState={readyState}
 
             />
         </div>
