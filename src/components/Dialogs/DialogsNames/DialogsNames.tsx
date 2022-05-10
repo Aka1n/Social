@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, PathMatch} from "react-router-dom";
 import classes from './DialogsNames.module.css'
 import {FC, useEffect, useMemo} from "react";
 import defaultImg from "../../../img/default-user.png"
@@ -9,26 +9,28 @@ type Props = {
     getMessages: (userId: number) => void
     setUserId: (userId: number) => void
     getDialogs: () => void
+    match:  PathMatch | null
+    device: string
 }
 
 type Names = {
     names: Array<DialogType>
 }
 
-const DialogsNames: FC<Props> = ({names, getMessages, setUserId, getDialogs}) => {
+const DialogsNames: FC<Props> = ({names, setUserId, getDialogs, match, device}) => {
 
     useEffect(() => {
         getDialogs()
     },[])
 
     const Names: FC<Names> = ({names}) => useMemo(() => {
+
         return (
             <>{
                 names.map((name) =>
                     <NavLink to={'/dialogs/'+ name.id}
                              key={name.id}
                              onClick={() => {
-                                 // props.getMessages(name.id)
                                  setUserId(name.id)
                              }}
                              className={e => e.isActive
@@ -39,12 +41,17 @@ const DialogsNames: FC<Props> = ({names, getMessages, setUserId, getDialogs}) =>
                     </NavLink>)
             }</>
         )
-    },[names])
+    },[])
+
+
+    if (match && device === 'Mobile') {
+        return (<></>)
+    }
 
     return (
-        <div className={classes.dialogs}>
-            <div className={classes.body}>
-                <div className={classes.names}>
+        <div className={!match && device === 'Mobile' ? classes.dialogsMobile : classes.dialogs}>
+            <div className={!match && device === 'Mobile' ? classes.bodyMobile : classes.body}>
+                <div className={!match && device === 'Mobile' ? classes.namesMobile : classes.names}>
                     <NavLink className={e => e.isActive
                         ? `${classes.name} ${classes.active}`
                         : classes.name} to={'/dialogs/common'}>

@@ -40,3 +40,15 @@
     width: 30px;
     margin-right: 10px;
 }
+
+.dialogsMobile {
+    position: relative;
+    width: 100%;
+}
+
+.body {
+    position: fixed;
+    height: calc(100% - 70px);
+    width: 100%;
+
+}
